@@ -34,8 +34,8 @@ function App() {
   const [checkOutPlaceholder, setCheckOutPlaceholder] = useState("");
 
   const handleSearch = () => {
-    checkInDateRef.current.focus();
-    checkOutDateRef.current.focus();
+    //checkInDateRef.current.focus();
+   // checkOutDateRef.current.focus();
     console.log(checkInDate);
     console.log(checkOutDate);
     const encodedLocation = encodeURIComponent(location);
@@ -70,18 +70,18 @@ function App() {
                 //ref={checkInDateRef}
                 ref={checkInDateRef}
                 //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
-                // value={
-                //   checkInSelected
-                //     ? date[0].startDate.toISOString().split("T")[0]
-                //     : checkOutPlaceholder
-                // } // Convert to string in the format "YYYY-MM-DD"
+                 value={
+                  checkInSelected
+                    ? date[0].startDate.toISOString().split("T")[0]
+                    : checkOutPlaceholder
+               } // Convert to string in the format "YYYY-MM-DD"
 
                 onChange={(e) => {
                   const newDate = [...date];
                   newDate[0].startDate = new Date(e.target.value);
                   setDate(newDate);
                 }}
-                value={checkInSelected ? checkInDate : checkInPlaceholder}
+                //value={checkInSelected ? checkInDate : checkInPlaceholder}
                 onClick={inputDate}
               />
             </div>
