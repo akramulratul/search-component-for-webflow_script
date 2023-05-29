@@ -18,6 +18,7 @@ function App() {
   const ref = useRef();
   const [location, setLocation] = useState("");
   const [checkInSelected, setCheckInSelected] = useState(false);
+  const [openDate, setOpenDate] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
   const [date, setDate] = useState([
     {
@@ -32,7 +33,11 @@ function App() {
     "Enter Check-in Date"
   );
   const [checkOutPlaceholder, setCheckOutPlaceholder] = useState("");
-
+  window.onload = function () {
+    //from ww  w . j  a  va2s. c  o  m
+    var today = new Date().toISOString().split("T")[0];
+    document.getElementsByName("setTodaysDate")[0].setAttribute("min", today);
+  };
   const handleSearch = () => {
     //checkInDateRef.current.focus();
     // checkOutDateRef.current.focus();
@@ -43,8 +48,9 @@ function App() {
     const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     window.open(url, "_blank");
   };
-  const inputDate = () => {
+  const inputDate = (e) => {
     setCheckInSelected(true);
+    console.log(e);
   };
   const checkOutInput = () => {
     setCheckOutSelected(true);
@@ -68,21 +74,16 @@ function App() {
               <input
                 className="inputDate hide-date-icon hidden"
                 type="date"
-                //ref={checkInDateRef}
+                name="setTodaysDate"
                 ref={checkInDateRef}
-                //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
-                value={
-                  checkInSelected
-                    ? date[0].startDate.toISOString().split("T")[0]
-                    : checkOutPlaceholder
-                } // Convert to string in the format "YYYY-MM-DD"
                 onChange={(e) => {
                   const newDate = [...date];
                   newDate[0].startDate = new Date(e.target.value);
                   setDate(newDate);
                 }}
-                //value={checkInSelected ? checkInDate : checkInPlaceholder}
+                value={checkInSelected ? checkInDate : checkInPlaceholder}
                 onClick={inputDate}
+                // value={format(date[0].startDate, "yyyy-MM-dd")}
               />
             </div>
             <div className="input-item last-input">
@@ -91,6 +92,7 @@ function App() {
                 className="inputDate hide-date-icon hidden"
                 type="date"
                 ref={checkOutDateRef}
+   
                 //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
                 value={checkOutSelected ? checkOutDate : checkOutPlaceholder}
                 onChange={(e) => {
