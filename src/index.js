@@ -35,7 +35,7 @@ function App() {
 
   const handleSearch = () => {
     //checkInDateRef.current.focus();
-   // checkOutDateRef.current.focus();
+    // checkOutDateRef.current.focus();
     console.log(checkInDate);
     console.log(checkOutDate);
     const encodedLocation = encodeURIComponent(location);
@@ -56,6 +56,7 @@ function App() {
           <div className="input-item first-input">
             <label className="title-text">Location</label>
             <input
+              className="title-text"
               type="text"
               placeholder="Location"
               onChange={(e) => setLocation(e.target.value)}
@@ -70,12 +71,11 @@ function App() {
                 //ref={checkInDateRef}
                 ref={checkInDateRef}
                 //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
-                 value={
+                value={
                   checkInSelected
                     ? date[0].startDate.toISOString().split("T")[0]
                     : checkOutPlaceholder
-               } // Convert to string in the format "YYYY-MM-DD"
-
+                } // Convert to string in the format "YYYY-MM-DD"
                 onChange={(e) => {
                   const newDate = [...date];
                   newDate[0].startDate = new Date(e.target.value);
