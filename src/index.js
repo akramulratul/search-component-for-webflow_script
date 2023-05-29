@@ -4,16 +4,21 @@ import reportWebVitals from "./reportWebVitals";
 import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRange } from "react-date-range";
-import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 Modal.setAppElement(document.getElementById("react-target"));
 import "./assets/styles/search.css";
 import Modal from "react-modal";
 import "react-datepicker/dist/react-datepicker.css";
 Modal.setAppElement(document.getElementById("react-target"));
+
 function App() {
+  const { useRef } = React;
+  const checkInDateRef = useRef();
+  const checkOutDateRef = useRef();
+  const ref = useRef();
   const [location, setLocation] = useState("");
+  const [checkInSelected, setCheckInSelected] = useState(false);
+  const [checkOutSelected, setCheckOutSelected] = useState(false);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -21,19 +26,29 @@ function App() {
       key: "selection",
     },
   ]);
+  const checkInDate = format(date[0].startDate, "yyyy-MM-dd");
+  const checkOutDate = format(date[0].endDate, "yyyy-MM-dd");
+  const [checkInPlaceholder, setCheckInPlaceholder] = useState(
+    "Enter Check-in Date"
+  );
+  const [checkOutPlaceholder, setCheckOutPlaceholder] = useState("");
 
   const handleSearch = () => {
-    const checkInDate = format(date[0].startDate, "yyyy-MM-dd");
-    const checkOutDate = format(date[0].endDate, "yyyy-MM-dd");
+    checkInDateRef.current.focus();
+    checkOutDateRef.current.focus();
     console.log(checkInDate);
     console.log(checkOutDate);
-
     const encodedLocation = encodeURIComponent(location);
     console.log(encodedLocation);
     const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     window.open(url, "_blank");
   };
-
+  const inputDate = () => {
+    setCheckInSelected(true);
+  };
+  const checkOutInput = () => {
+    setCheckOutSelected(true);
+  };
   return (
     <div style={{ background: "black", height: "256px" }}>
       <div className="search-component">
@@ -41,51 +56,51 @@ function App() {
           <div className="search-details">
             <div className="input-item first-input">
               <label className="title-text">Location</label>
-              <p className="locationdetails">Las Vegas</p>
+              <input
+                type="text"
+                placeholder="Location"
+                onChange={(e) => setLocation(e.target.value)}
+              />
             </div>
             <div className="mobileFlex">
               <div className="input-item middle-input">
                 <label className="title-text">Check-in</label>
                 <input
+                  className="inputDate hide-date-icon hidden"
                   type="date"
-                  value={date[0].startDate.toISOString().split("T")[0]} // Convert to string in the format "YYYY-MM-DD"
+                  //ref={checkInDateRef}
+                  ref={checkInDateRef}
+                  //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
+                  // value={
+                  //   checkInSelected
+                  //     ? date[0].startDate.toISOString().split("T")[0]
+                  //     : checkOutPlaceholder
+                  // } // Convert to string in the format "YYYY-MM-DD"
+
                   onChange={(e) => {
                     const newDate = [...date];
                     newDate[0].startDate = new Date(e.target.value);
                     setDate(newDate);
                   }}
-                  className="inputDate"
+                  value={checkInSelected ? checkInDate : checkInPlaceholder}
+                  onClick={inputDate}
                 />
-                {/* <input
-              onClick={handleCheckInClick}
-              value={
-                checkInSelected
-                  ? format(date[0].startDate, "yyyy-MM-dd")
-                  : "Today"
-              }
-              readOnly
-            /> */}
               </div>
               <div className="input-item last-input">
                 <label className="title-text">Check-out</label>
                 <input
+                  className="inputDate hide-date-icon hidden"
                   type="date"
-                  className="inputDate no-calendar-icon"
-                  value={date[0].endDate.toISOString().split("T")[0]} // Convert to string in the format "YYYY-MM-DD"
+                  ref={checkOutDateRef}
+                  //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
+                  value={checkOutSelected ? checkOutDate : checkOutPlaceholder}
                   onChange={(e) => {
                     const newDate = [...date];
                     newDate[0].endDate = new Date(e.target.value);
                     setDate(newDate);
                   }}
-                />
-                <DatePicker
-                  value={date[0].endDate.toISOString().split("T")[0]} // Convert to string in the format "YYYY-MM-DD"
-                  onChange={(e) => {
-                    const newDate = [...date];
-                    newDate[0].endDate = new Date(e.target.value);
-                    setDate(newDate);
-                  }}
-                  className="inputDate"
+                  onClick={checkOutInput}
+                  // onChange={checkOutChange}
                 />
               </div>
             </div>

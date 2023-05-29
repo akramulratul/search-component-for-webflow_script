@@ -101,10 +101,42 @@ input:focus {
 /* // @media only screen and (max-width: 2113px) {
   
   } // */
+
+/* .hide-date-icon::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.hide-date-icon::-webkit-inner-spin-button,
+.hide-date-icon::-webkit-clear-button {
+  -webkit-appearance: none;
+  display: none;
+} */
+
+.input-container input {
+  border: none;
+  box-sizing: border-box;
+  outline: 0;
+  padding: 0.75rem;
+  position: relative;
+  width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
 @media only screen and (max-width: 768px) {
   .search-component {
     max-width: 400px;
-    border-radius: 50px;
+    /* border-radius: 50px; */
     margin-left: 0px;
   }
   .search-details {
@@ -115,7 +147,7 @@ input:focus {
       / align-items: flex-start; // */
     max-width: 400px;
     height: 85px;
-    border-radius: 50px;
+    border-radius: 16px;
     background-color: white;
     margin-left: 10px;
   }
