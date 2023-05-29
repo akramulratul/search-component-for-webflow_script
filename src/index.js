@@ -17,9 +17,16 @@ function App() {
   const checkOutDateRef = useRef();
   const ref = useRef();
   const [location, setLocation] = useState("");
+
   const [checkInSelected, setCheckInSelected] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
+  const [inDate, setInDate] = useState([{startDate:new Date()}]);
+  const [outDate, setOutDate] = useState([
+    {
+      endDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+    },
+  ]);
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -92,7 +99,6 @@ function App() {
                 className="inputDate hide-date-icon hidden"
                 type="date"
                 ref={checkOutDateRef}
-   
                 //value={formatSelectedDate(date[0].startDate)} // Convert to string in the format "YYYY-MM-DD"
                 value={checkOutSelected ? checkOutDate : checkOutPlaceholder}
                 onChange={(e) => {
