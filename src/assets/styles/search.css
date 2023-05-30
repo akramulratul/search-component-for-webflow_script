@@ -13,6 +13,7 @@
   text-align: left;
   line-height: 16px;
   font-family: "Inter", sans-serif;
+  margin-bottom: 8px;
 }
 .locationdetails {
   font-family: "Inter", sans-serif;
@@ -84,6 +85,7 @@ input {
   height: 20px;
   font-size: 16px;
   width: auto;
+  /* background-color: #0966d7; */
   overflow: hidden;
 }
 textarea:focus,
@@ -128,17 +130,56 @@ input:focus {
   width: 100%;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+input#datein[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   bottom: 0;
   color: transparent;
   cursor: pointer;
   height: auto;
-  left: 0;
+  left: 35%;
   position: absolute;
   right: 0;
-  top: 0;
-  width: auto;
+  top: 18%;
+  width: 25%;
+}
+input#dateOut[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 65%;
+  position: absolute;
+  right: 0;
+  top: 18%;
+  width: 25%;
+}
+input[type="date"]::-webkit-input-placeholder {
+  color: white;
+}
+input[type="date"]::placeholder {
+  /* Edge */
+  color: white;
+}
+input[type="date"i] {
+  /* color: #0966d7; */
+  background-color: white !important;
+  color: black !important;
+  content: "Ratul";
+  background: white !important;
+}
+.inputPlaceholder {
+  background-color: white;
+  position: absolute;
+  top: 36px;
+  width: 120px;
+  padding: 5px 0px;
+  pointer-events: none;
+  font-family: "Inter", sans-serif;
+  color: #6f787f;
+  line-height: 24px;
+  font-size: 20px;
+  font-weight: 400;
 }
 @media only screen and (max-width: 768px) {
   .search-component {
@@ -153,7 +194,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* // flex-direction: column; //
       / align-items: flex-start; // */
     max-width: 400px;
-    height: 85px;
+    height: 152px;
     border-radius: 16px;
     background-color: white;
     margin-left: 10px;
@@ -165,31 +206,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: start;
     justify-content: center;
   }
+  .first-input {
+    /* border-bottom: 1px solid rgb(214, 214, 214); */
+    height: 76px;
+  }
   .input-item label {
     font-size: 10px;
   }
   .middle-input {
     border-right: 1px solid rgb(214, 214, 214);
+    border-top: 1px solid rgb(214, 214, 214);
   }
-  button {
-    position: absolute;
-    top: 92px;
-    border-radius: 999px;
-    background-color: #0966d7;
-    height: 48px;
-    width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding: 12px;
+  .last-input {
+    border-top: 1px solid rgb(214, 214, 214);
   }
   .mobileFlex {
     display: flex;
+    height: 76px;
   }
   input {
     border: none;
-    height: 20px;
     font-size: 16px;
     /* width: auto; */
     overflow: hidden;
@@ -197,6 +233,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   textarea:focus,
   input:focus {
     outline: none;
+  }
+  .mobile-button {
+    border-radius: 999px;
+    padding: 12px;
+    background-color: #0966d7;
+    border: 0px;
+    line-height: 24px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    margin-top: 16px;
+  }
+  .inputPlaceholder {
+    background-color: white;
+    position: absolute;
+    top: 108px;
+    width: 120px;
+    padding: 5px 0px;
+    pointer-events: none;
+    font-family: "Inter", sans-serif;
+    color: #6f787f;
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 400;
   }
 }
 @media only screen and (max-width: 568px) {
