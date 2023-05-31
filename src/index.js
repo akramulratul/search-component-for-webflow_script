@@ -93,14 +93,18 @@ function App() {
       <div className="search-field">
         <div className="search-details">
           <div className="input-item first-input">
-            <label className="title-text">Location</label>
+            <label className="title-text" id="location">
+              Location
+            </label>
             {/* <input
                 className="title-text"
                 type="text"
                 placeholder="Location"
                 onChange={(e) => setLocation(e.target.value)}
               /> */}
-            <p className="title-text">Las Vegas</p>
+            <p className="title-text" id="location">
+              Las Vegas
+            </p>
           </div>
           <div className="mobileFlex">
             <div className="input-item middle-input">
