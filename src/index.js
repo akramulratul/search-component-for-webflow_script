@@ -72,7 +72,7 @@ function App() {
   //   document.getElementsByName("setTodaysDate")[0].setAttribute("min", today);
   // };
   const handleSearch = () => {
-    checkInDateRef.current.focus();
+    // checkInDateRef.current.focus();
     // checkOutDateRef.current.focus();
     // console.log(checkInDate);
     // console.log(checkOutDate);

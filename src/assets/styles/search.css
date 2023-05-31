@@ -136,11 +136,11 @@ input#datein[type="date"]::-webkit-calendar-picker-indicator {
   color: transparent;
   cursor: pointer;
   height: auto;
-  left: 35%;
+  left: 30%;
   position: absolute;
   right: 0;
-  top: 18%;
-  width: 25%;
+  top: 10%;
+  width: 28%;
 }
 input#dateOut[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
@@ -148,11 +148,11 @@ input#dateOut[type="date"]::-webkit-calendar-picker-indicator {
   color: transparent;
   cursor: pointer;
   height: auto;
-  left: 65%;
+  left: 62%;
   position: absolute;
   right: 0;
-  top: 18%;
-  width: 25%;
+  top: 10%;
+  width: 28%;
 }
 input[type="date"]::-webkit-input-placeholder {
   color: white;
@@ -169,6 +169,20 @@ input[type="date"i] {
   background: white !important;
 }
 .inputPlaceholder {
+  background-color: white;
+  position: absolute;
+  top: 36px;
+  width: 103px;
+  padding: 5px 0px;
+  pointer-events: none;
+  font-family: "Inter", sans-serif;
+  color: #6f787f;
+  line-height: 24px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: left;
+}
+#next {
   background-color: white;
   position: absolute;
   top: 36px;
