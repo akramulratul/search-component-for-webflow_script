@@ -4,12 +4,57 @@
   padding: 0px;
   /* font-family: "Inter", sans-serif; */
 }
+.application_backgroud {
+  background-color: black;
+  height: 150px;
+}
 .search-component {
-  max-width: 800px;
+  max-width: 640px;
+  max-height: 96px;
+}
+.search-field {
+}
+.search-details {
+  position: relative;
+  display: flex;
+  /* justify-content: start; */
+  max-width: 640px;
+  max-height: 96px;
+  border-radius: 50px;
+  background: white;
+}
+.input-item {
+  border: 0px;
+  color: black;
+  padding-left: 32px;
+  width: 268px;
   height: 96px;
+  display: flex;
+  /* margin: 32px 24px; */
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.last-button {
+  width: 96px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  height: 96px;
+  flex-direction: column;
 }
 .title-text {
-  color: #363d42;
+  color: #555f66;
+  text-align: left;
+  line-height: 16px;
+  font-family: "Inter", sans-serif;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+}
+.placeholder-font {
+  color: #6f787f;
   text-align: left;
   line-height: 24px;
   font-family: "Inter", sans-serif;
@@ -17,57 +62,13 @@
   font-size: 20px;
   font-weight: 400;
   font-style: normal;
+  width: 204px;
 }
-.locationdetails {
-  font-family: "Inter", sans-serif;
-  color: #363d42;
-  line-height: 24px;
-}
-.inputDate {
-  font-family: "Inter", sans-serif;
-  color: #6f787f;
-  line-height: 24px;
-  overflow: hidden;
-}
-.input-item {
-  border: 0px;
-  color: black;
-  padding-left: 40px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-}
-.inputDate {
-  overflow: hidden !important;
-}
-.first-input {
-}
-.middle-input {
-  border-left: 1px solid rgb(214, 214, 214);
-  border-right: 1px solid rgb(214, 214, 214);
-}
-.last-input {
-}
-.search-field {
-}
-.search-details {
-  position: relative;
-  display: flex;
-  justify-content: start;
-  /* // flex-direction: column; //
-    / align-items: flex-start; // */
-  width: 800px;
-  height: 85px;
-  border-radius: 50px;
-  background: white;
-  margin-left: 10px;
-}
+
 .btn {
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 16px;
+  top: 16px;
   border-radius: 50%;
   background-color: #252a2d;
   height: 64px;
@@ -83,6 +84,32 @@
   width: 68px;
   transition: background-color 0.15s ease-out;
 }
+/* input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: red;
+} */
+.locationdetails {
+  font-family: "Inter", sans-serif;
+  color: #363d42;
+  line-height: 24px;
+}
+.inputDate {
+  font-family: "Inter", sans-serif;
+  color: #6f787f;
+  line-height: 24px;
+  overflow: hidden;
+}
+
+.inputDate {
+  overflow: hidden !important;
+}
+.first-input {
+  border-right: 1px solid rgb(214, 214, 214);
+}
+.last-input {
+}
+
 input {
   border: none;
   height: 20px;
@@ -103,26 +130,6 @@ input:focus {
 .mobileFlex {
   display: flex;
 }
-/* .positioning {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0rem;
-} */
-
-/* // @media only screen and (max-width: 2113px) {
-  
-  } // */
-
-/* .hide-date-icon::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
-.hide-date-icon::-webkit-inner-spin-button,
-.hide-date-icon::-webkit-clear-button {
-  -webkit-appearance: none;
-  display: none;
-} */
 
 .input-container input {
   border: none;
@@ -185,88 +192,107 @@ input[type="date"i] {
   text-align: left;
   font-style: normal;
 }
+/* React Date calender edit  */
+.react-datepicker {
+  font-family: Inter, sans-serif !important;
+  font-size: 0.875rem !important;
+  color: rgba(54, 61, 66, 1) !important; /* Content/Main/Default/Text */
+  border: none !important;
+  box-shadow: 0px 0.5px 1px rgba(12, 34, 45, 0.09),
+    0px 2px 12px rgba(12, 34, 45, 0.09),
+    inset 0px 0px 0px 1px rgba(12, 34, 45, 0.09); /* Elevation/1dp */
+  --react-datepicker-padding: 16px;
+  --react-datepicker-border-radius: 16px;
+  border-radius: var(--react-datepicker-border-radius) !important;
+}
+.react-datepicker__header {
+  padding: var(--react-datepicker-padding) !important;
+  border-top-right-radius: var(--react-datepicker-border-radius) !important;
+  border-top-left-radius: var(--react-datepicker-border-radius) !important;
+  border-bottom-color: rgba(
+    12,
+    34,
+    45,
+    0.09
+  ) !important; /* Border/Main/Default */
+  background-color: rgba(250, 250, 250, 1) !important;
+}
+.react-datepicker__month {
+  padding: var(--react-datepicker-padding) !important;
+  margin: 0px !important;
+}
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::before {
+  border-top-color: rgba(12, 34, 45, 0.09) !important; /* Border/Main/Default */
+}
+.react-datepicker_year-read-view--down-arrow,
+.react-datepicker_month-read-view--down-arrow,
+.react-datepicker_month-year-read-view--down-arrow,
+.react-datepicker_navigation-icon::before {
+  border-color: rgba(
+    85,
+    95,
+    102,
+    1
+  ) !important; /* Content/Main/Default/Caption */
+  border-width: 2px 2px 0 0 !important;
+  top: 12px !important;
+  height: 8px !important;
+  width: 8px !important;
+}
+.react-datepicker__navigation--previous {
+  left: 8px !important;
+}
+.react-datepicker__navigation--next {
+  right: 8px !important;
+}
+/* Day */
+.react-datepicker_day-name,
+.react-datepicker_day,
+.react-datepicker__time-name {
+  color: rgba(54, 61, 66, 1) !important; /* Content/Main/Default/Text */
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  border-radius: 999px !important;
+}
+.react-datepicker_day:hover,
+.react-datepicker_month-text:hover,
+.react-datepicker_quarter-text:hover,
+.react-datepicker_year-text:hover {
+  background-color: rgba(
+    22,
+    22,
+    55,
+    0.03
+  ) !important; /* Background/Main/Default/Hover Alpha */
+}
+.react-datepicker__day--selected {
+  background-color: rgba(
+    9,
+    102,
+    215,
+    1
+  ) !important; /* Background/Main/Accent/Default */
+  color: white !important;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999em !important;
+}
+.react-datepicker__day--selected:hover {
+  border-radius: 999em !important;
+}
+.react-datepicker_day--disabled,
+.react-datepicker_month-text--disabled,
+.react-datepicker_quarter-text--disabled,
+.react-datepicker_year-text--disabled {
+  color: rgba(
+    111,
+    120,
+    127,
+    1
+  ) !important; /* Content/Main/Default/Placeholder */
+}
 @media only screen and (max-width: 768px) {
-  .search-component {
-    max-width: 400px;
-    /* border-radius: 50px; */
-    margin-left: 0px;
-  }
-  .search-details {
-    position: relative;
-    display: block;
-    justify-content: none;
-    /* // flex-direction: column; //
-      / align-items: flex-start; // */
-    max-width: 400px;
-    height: 152px;
-    border-radius: 16px;
-    background-color: white;
-    margin-left: 10px;
-  }
-  .input-item {
-    border: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-  }
-  .first-input {
-    /* border-bottom: 1px solid rgb(214, 214, 214); */
-    height: 76px;
-  }
-  .input-item label {
-    font-size: 10px;
-  }
-  .middle-input {
-    border-right: 1px solid rgb(214, 214, 214);
-    border-top: 1px solid rgb(214, 214, 214);
-  }
-  .last-input {
-    border-top: 1px solid rgb(214, 214, 214);
-  }
-  .mobileFlex {
-    display: flex;
-    height: 76px;
-  }
-  input {
-    border: none;
-    font-size: 16px;
-    /* width: auto; */
-    overflow: hidden;
-  }
-  textarea:focus,
-  input:focus {
-    outline: none;
-  }
-  .mobile-button {
-    border-radius: 999px;
-    padding: 12px;
-    background-color: #0966d7;
-    border: 0px;
-    line-height: 24px;
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-    display: flex;
-    margin-top: 16px;
-  }
-  #location {
-    margin-top: 10px;
-  }
-  .inputPlaceholder {
-    background-color: white;
-    position: absolute;
-    top: 108px;
-    width: 120px;
-    padding: 5px 0px;
-    pointer-events: none;
-    font-family: "Inter", sans-serif;
-    color: #6f787f;
-    line-height: 24px;
-    font-size: 20px;
-    font-weight: 400;
-  }
 }
 @media only screen and (max-width: 568px) {
 }
