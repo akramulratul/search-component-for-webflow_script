@@ -1,8 +1,7 @@
-import React, { useState, Component, useEffect } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { format } from "date-fns";
-Modal.setAppElement(document.getElementById("react-target"));
 import "./assets/styles/search.css";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
@@ -13,10 +12,9 @@ Modal.setAppElement(document.getElementById("react-target"));
 function App() {
   const [checkInSelected, setCheckInSelected] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
-  const [inDate, setInDate] = useState(new Date(), "yyyy-MM-dd");
+  const [inDate, setInDate] = useState(new Date());
   const [outDate, setOutDate] = useState(
-    new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
-    "yyyy-MM-dd"
+    new Date().getTime() + 7 * 24 * 60 * 60 * 1000
   );
   const isSmallScreen = window.innerWidth <= 768;
   const handleSearch = () => {
@@ -25,6 +23,29 @@ function App() {
     const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     window.open(url, "_blank");
   };
+  function pl(e, t) {
+    try {
+      // Make sure t is not null or undefined
+      if (t !== null && t !== undefined) {
+        console.error(t.value);
+      } else {
+        console.error("Error: 't' is null or undefined");
+      }
+    } catch (err) {
+      // Add a log here to see what error is being thrown
+      console.error("Caught an error:", err);
+
+      // If e is undefined or null, throwing it again would lead to another error
+      // So, we should check if e exists before throwing
+      if (e !== null && e !== undefined) {
+        setTimeout(() => {
+          throw e;
+        });
+      } else {
+        console.error("Error: 'e' is null or undefined");
+      }
+    }
+  }
   return (
     // <div className="application_backgroud">
     <div className="search-component">
@@ -33,13 +54,14 @@ function App() {
           <div className="input-item first-input">
             <label className="title-text">Check-in</label>
             <DatePicker
+              onChange={(date) => {
+                setInDate(date);
+                setCheckInSelected(true);
+              }}
               minDate={new Date()}
               showDisabledMonthNavigation
               selected={inDate}
-              onChange={(date) => {
-                setInDate(date), setCheckInSelected(true);
-              }}
-              value={checkInSelected ? inDate : "Today"}
+              value={checkInSelected ? format(inDate, "yyyy-MM-dd") : "Today"}
               className="placeholder-font"
             />
           </div>
@@ -49,9 +71,12 @@ function App() {
               <DatePicker
                 selected={outDate}
                 onChange={(date) => {
-                  setOutDate(date), setCheckOutSelected(true);
+                  setOutDate();
+                  setCheckOutSelected(true);
                 }}
-                value={checkOutSelected ? outDate : "Next Week"}
+                value={
+                  checkOutSelected ? format(outDate, "yyyy-MM-dd") : "Next Week"
+                }
                 className="placeholder-font"
               />
             </div>
@@ -95,7 +120,6 @@ function App() {
               // </button>
               <a
                 onClick={handleSearch}
-                id="w-node-_311d26e7-ecf6-6790-258f-60095d6dc1d1-27ef0823"
                 href="#"
                 class="search_icon w-inline-block"
               >

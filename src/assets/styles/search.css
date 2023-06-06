@@ -221,7 +221,7 @@ input[type="date"i] {
     0 0 1px 0.5px rgba(0, 0, 0, 0.09), 0 2px 12px rgba(12, 34, 45, 0.09);
 }
 
-.search_icon-wrap:hover {
+button:hover {
   width: 4.25rem;
   height: 4.25rem;
   color: #f8f8f9;
