@@ -71,7 +71,7 @@ function App() {
               <DatePicker
                 selected={outDate}
                 onChange={(date) => {
-                  setOutDate();
+                  setOutDate(date);
                   setCheckOutSelected(true);
                 }}
                 value={
