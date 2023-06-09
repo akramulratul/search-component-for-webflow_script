@@ -7,14 +7,14 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-Modal.setAppElement(document.getElementById("react-target"));
+Modal.setAppElement(document.getElementById("search_secound"));
 
 function App() {
   const [checkInSelected, setCheckInSelected] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
   const [inDate, setInDate] = useState(new Date());
   const [outDate, setOutDate] = useState(
-    new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+    new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
   );
   const [checkInDate, setCheckInDate] = useState(
     format(new Date(), "yyyy-MM-dd")
@@ -22,16 +22,16 @@ function App() {
   const [checkOutDate, setCheckOutDate] = useState(
     format(new Date().getTime() + 7 * 24 * 60 * 60 * 1000, "yyyy-MM-dd")
   );
+  console.log("CheckIn", inDate);
+  console.log("CheckOut", outDate);
+
   const isSmallScreen = window.innerWidth <= 768;
   const [showPlaceholder, setShowPlaceholder] = useState(true);
-
+  // const checkOutMinDate = inDate + inDate.setDate(inDate.getDate() + 1);
+  // console.log("Check out minDate", checkOutMinDate);
   useEffect(() => {
     const currentDate = format(new Date(), "yyyy-MM-dd");
-    console.log("Current date", currentDate);
-    console.log("inDate", inDate);
-    setCheckOutDate(
-      format(new Date(inDate).getTime() + 7 * 24 * 60 * 60 * 1000, "yyyy-MM-dd")
-    );
+
     if (currentDate !== checkInDate) {
       setShowPlaceholder(false);
     } else {
@@ -44,29 +44,52 @@ function App() {
       new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
       "yyyy-MM-dd"
     );
-    console.log("NextDate", NextDate);
-    console.log("out", outDate);
     if (NextDate !== checkOutDate) {
       setShowPlaceholder(false);
     } else {
       setShowPlaceholder(true);
     }
   }, [checkOutDate]);
+
+  // for mobile same type logic aS like the desktop
+  // useEffect(() => {
+  //   console.log("Check IN DATE", checkInDate);
+  //   console.log("Check OUT DATE", checkOutDate);
+  //   if (checkInDate === checkOutDate) {
+  //     const newOutDate = new Date(checkInDate);
+  //     newOutDate.setDate(newOutDate.getDate() + 1);
+  //     setCheckOutDate(newOutDate);
+  //   }
+  //   if (checkInDate > checkOutDate) {
+  //     setCheckOutDate(new Date(checkInDate));
+  //     setCheckInDate(new Date(checkOutDate));
+  //   }
+  // }, [checkInDate, checkOutDate]);
+  useEffect(() => {
+    if (inDate.toDateString() === outDate.toDateString()) {
+      const newOutDate = new Date(inDate);
+      newOutDate.setDate(newOutDate.getDate() + 1);
+      setOutDate(newOutDate);
+    }
+    if (inDate.getTime() > outDate.getTime()) {
+      setOutDate(new Date(inDate));
+      setInDate(new Date(outDate));
+    }
+  }, [inDate, outDate]);
   const handleSearch = () => {
     const encodedLocation = encodeURIComponent(location);
-    console.log(encodedLocation);
     const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     window.open(url, "_blank");
   };
 
   const handleMobileSearch = () => {
     const encodedLocation = encodeURIComponent(location);
-    console.log(encodedLocation);
     const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     window.open(url, "_blank");
   };
+
   return (
-    // <div className="application_backgroud">
+    <div className="application_backgroud">
       <div className="search-component">
         <div className="search-field">
           <div className="search-details">
@@ -78,7 +101,7 @@ function App() {
                     <span className="inputPlaceholder">Today</span>
                   )}
                   <input
-                    className="inputDate hide-date-icon hidden"
+                    className="inputDate hide-date-icon hidden nativeInputFont"
                     id="datein"
                     type="date"
                     min={format(new Date(), "yyyy-MM-dd")}
@@ -90,6 +113,7 @@ function App() {
                 <DatePicker
                   onChange={(date) => {
                     setInDate(date);
+                    console.log("After Change indate", inDate);
                     setCheckInSelected(true);
                   }}
                   minDate={new Date()}
@@ -113,16 +137,22 @@ function App() {
                     <input
                       id="dateOut"
                       type="date"
-                      className="inputDate hide-date-icon hidden"
+                      className="inputDate hide-date-icon hidden nativeInputFont"
                       value={checkOutDate}
+                      min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                       onChange={(e) => setCheckOutDate(e.target.value)}
                     />
                   </>
                 ) : (
                   <DatePicker
                     selected={outDate}
+                    minDate={inDate || format(new Date(), "yyyy-MM-dd")}
                     onChange={(date) => {
+                      console.log("New Date", new Date(date));
+                      console.log("New IN Date", new Date(inDate));
+                      console.log("New out", new Date(outDate));
                       setOutDate(date);
+                      console.log("After Change outdate", outDate);
                       setCheckOutSelected(true);
                     }}
                     value={
@@ -163,7 +193,7 @@ function App() {
               <a
                 href="#"
                 onClick={handleMobileSearch}
-                className="search_button-2 w-inline-block"
+                className="search_button-2"
               >
                 <svg
                   width="24"
@@ -188,12 +218,12 @@ function App() {
           </div>
         </div>
       </div>
-    // </div>
+    </div>
   );
 }
 
 ReactDOM.render(
   React.createElement(App, {}, null),
-  document.getElementById("react-target")
+  document.getElementById("search_secound")
 );
 reportWebVitals();
