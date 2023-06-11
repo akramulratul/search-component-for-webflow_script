@@ -89,7 +89,7 @@ function App() {
   };
 
   return (
-    <div className="application_backgroud">
+    // <div className="application_backgroud">
       <div className="search-component">
         <div className="search-field">
           <div className="search-details">
@@ -218,7 +218,7 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
+    /* </div> */
   );
 }
 
