@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-Modal.setAppElement(document.getElementById("search_secound"));
+Modal.setAppElement(document.getElementById("react-target"));
 
 function App() {
   const [checkInSelected, setCheckInSelected] = useState(false);
@@ -27,44 +27,33 @@ function App() {
 
   const isSmallScreen = window.innerWidth <= 768;
   const [showPlaceholder, setShowPlaceholder] = useState(true);
-  // const checkOutMinDate = inDate + inDate.setDate(inDate.getDate() + 1);
-  // console.log("Check out minDate", checkOutMinDate);
+
   useEffect(() => {
     const currentDate = format(new Date(), "yyyy-MM-dd");
-
-    if (currentDate !== checkInDate) {
-      setShowPlaceholder(false);
-    } else {
-      setShowPlaceholder(true);
-    }
-  }, [checkInDate]);
-
-  useEffect(() => {
     const NextDate = format(
       new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
       "yyyy-MM-dd"
     );
-    if (NextDate !== checkOutDate) {
+    console.log("Current Date", currentDate, "Checkin date", checkInDate);
+    console.log("NextDate Date", NextDate, "Checkout date", checkOutDate);
+    if (NextDate !== checkOutDate || currentDate !== checkInDate) {
       setShowPlaceholder(false);
+      let checkInDateObj = new Date(checkInDate);
+      let checkOutDateObj = new Date(checkOutDate);
+      if (checkInDateObj.toDateString() === checkOutDateObj.toDateString()) {
+        const newOutDate = new Date(checkInDateObj);
+        newOutDate.setDate(newOutDate.getDate() + 1);
+        setCheckOutDate(format(newOutDate, "yyyy-MM-dd"));
+      }
+      if (checkInDateObj.getTime() > checkOutDateObj.getTime()) {
+        setCheckOutDate(format(new Date(checkInDateObj), "yyyy-MM-dd"));
+        setCheckInDate(format(new Date(checkOutDateObj), "yyyy-MM-dd"));
+      }
     } else {
       setShowPlaceholder(true);
     }
-  }, [checkOutDate]);
+  }, [checkInDate, checkOutDate]);
 
-  // for mobile same type logic aS like the desktop
-  // useEffect(() => {
-  //   console.log("Check IN DATE", checkInDate);
-  //   console.log("Check OUT DATE", checkOutDate);
-  //   if (checkInDate === checkOutDate) {
-  //     const newOutDate = new Date(checkInDate);
-  //     newOutDate.setDate(newOutDate.getDate() + 1);
-  //     setCheckOutDate(newOutDate);
-  //   }
-  //   if (checkInDate > checkOutDate) {
-  //     setCheckOutDate(new Date(checkInDate));
-  //     setCheckInDate(new Date(checkOutDate));
-  //   }
-  // }, [checkInDate, checkOutDate]);
   useEffect(() => {
     if (inDate.toDateString() === outDate.toDateString()) {
       const newOutDate = new Date(inDate);
@@ -89,7 +78,7 @@ function App() {
   };
 
   return (
-    // <div className="application_backgroud">
+    <div className="application_backgroud">
       <div className="search-component">
         <div className="search-field">
           <div className="search-details">
@@ -218,12 +207,12 @@ function App() {
           </div>
         </div>
       </div>
-    /* </div> */
+    </div>
   );
 }
 
 ReactDOM.render(
   React.createElement(App, {}, null),
-  document.getElementById("search_secound")
+  document.getElementById("react-target")
 );
 reportWebVitals();
