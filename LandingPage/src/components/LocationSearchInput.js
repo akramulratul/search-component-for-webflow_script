@@ -3,6 +3,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
 } from "react-places-autocomplete";
 
+
 function loadScript(url, callback) {
   let script = document.createElement("script");
   script.type = "text/javascript";
@@ -25,6 +26,7 @@ function loadScript(url, callback) {
   script.src = url;
   document.getElementsByTagName("head")[0].appendChild(script);
 }
+
 function getAddressComponent(addressComponents, component) {
   for (let i = 0; i < addressComponents.length; i++) {
     if (addressComponents[i].types.includes(component)) {
