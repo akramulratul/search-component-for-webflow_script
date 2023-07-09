@@ -8,76 +8,89 @@
   background-color: black;
   height: 150px;
 }
-.search-component {
-  max-width: 640px;
-  /* max-height: 96px; */
+/* .search-bar,
+.search-bar * {
+  box-sizing: border-box;
 }
-.search-field {
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  width: 640px;
+} */
+.search-bar {
+  max-width: 640px;
 }
 .search-details {
   position: relative;
   display: flex;
-  /* justify-content: start; */
-  max-width: 640px;
-  max-height: 96px;
+  justify-content: flex-start;
   border-radius: 50px;
   background: white;
+  border-radius: 999px;
+  padding: 0px 0px 0px 8px;
 }
 .input-item {
-  border: 0px;
-  color: black;
-  padding-left: 40px;
-  width: 268px;
-  height: 96px;
+  border-style: solid;
+  border-color: var(--border-main-default, rgba(12, 34, 45, 0.09));
+  border-width: 0px 1px 0px 0px;
+  padding: 24px 32px 20px 32px;
   display: flex;
-  /* margin: 32px 24px; */
   flex-direction: column;
-  align-items: start;
-  justify-content: center;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  overflow: hidden;
 }
 .mobile_show {
   display: none;
 }
 .input-item_2 {
-  border: 0px;
-  color: black;
-  padding-left: 32px;
-  width: 268px;
-  height: 96px;
+  padding: 24px 32px 20px 32px;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: center;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .last-button {
-  width: 96px;
+  /* padding: 16px;
   display: flex;
-  padding-left: 16px;
-  gap: 8px;
-  height: 96px;
   flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden; */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .title-text {
-  color: #555f66;
+  color: var(--content-main-default-caption, #555f66);
   text-align: left;
-  line-height: 16px;
-  font-family: "Inter", sans-serif;
-  margin-bottom: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  font-style: normal;
+  font: var(--label-l-100, 500 12px/16px "Inter", sans-serif);
+  position: relative;
+  align-self: stretch;
 }
 .placeholder-font {
-  color: #6f787f;
+  box-sizing: border-box;
+  color: var(--content-main-default-placeholder, #6f787f);
   text-align: left;
-  line-height: 24px;
-  font-family: "Inter", sans-serif;
-  /* margin-bottom: 8px; */
-  font-size: 20px;
-  font-weight: 400;
-  font-style: normal;
-  width: 204px;
+  font: var(--text-t-400-desktop-regular, 400 20px/32px "Inter", sans-serif);
+  position: relative;
+  align-self: stretch;
 }
 .react-datepicker-wrapper {
   width: 0% !important;
@@ -115,11 +128,11 @@ input#dateOut[type="date"]::-webkit-calendar-picker-indicator {
   color: transparent;
   cursor: pointer;
   height: auto;
-  left: 52%;
+  left: 6%;
   position: absolute;
   right: 0;
   top: 10%;
-  width: 44%;
+  width: 84%;
 }
 input[type="date"]::-webkit-input-placeholder {
   color: white;
@@ -134,21 +147,7 @@ input[type="date"i] {
   color: black !important;
   background: white !important;
 }
-.inputPlaceholder {
-  background-color: rgb(255, 255, 255);
-  position: absolute;
-  top: 40px;
-  width: 137px;
-  padding: 5px 0px;
-  pointer-events: none;
-  font-family: "Inter", sans-serif;
-  color: #6f787f;
-  line-height: 24px;
-  font-size: 16px;
-  font-weight: 400;
-  text-align: left;
-  font-style: normal;
-}
+
 .search_icon-wrap {
   width: 4rem;
   height: 4rem;
@@ -174,7 +173,7 @@ input[type="date"i] {
   width: 4.25rem;
   height: 4.25rem;
   color: #f8f8f9;
-  background-color: #485258;
+  /* background-color: #485258; */
 }
 
 .search_icon-wrap:active {
@@ -193,9 +192,23 @@ input[type="date"i] {
   margin-top: auto;
   margin-bottom: auto;
   display: flex;
-  top: 50px;
 }
+.inputPlaceholder {
+  background-color: rgb(255, 255, 255);
+  color: var(--content-main-default-placeholder, #6f787f);
+  text-align: left;
+  font: var(
+    --text-t-400-tablet-mobile-regular,
+    400 16px/24px "Inter",
+    sans-serif
+  );
+  top: 36px;
 
+  position: absolute;
+  width: 96px;
+  pointer-events: none;
+  align-self: stretch;
+}
 /* React Date calender edit  */
 .react-datepicker {
   font-family: Inter, sans-serif !important;
@@ -326,21 +339,45 @@ input[type="date"i] {
   ) !important; /* Content/Main/Default/Placeholder */
 }
 @media only screen and (max-width: 991px) {
-  .search-component {
-    max-width: 25rem;
-    /* max-height: 76px; */
+  .search-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    max-width: 400px;
+    position: relative;
+  }
+  .search-field {
+    background: var(--background-main-default-default, #ffffff);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: var(
+      --elevation-1-dp-box-shadow,
+      0px 2px 12px 0px rgba(12, 34, 45, 0.09),
+      0px 0.5px 1px 0px rgba(12, 34, 45, 0.09),
+      inset 0px 0px 0px 1px rgba(12, 34, 45, 0.09)
+    );
+    overflow: hidden;
   }
   .placeholder-font {
     color: #6f787f;
     text-align: left;
     line-height: 24px;
     font-family: "Inter", sans-serif;
-    /* margin-bottom: 8px; */
     font-size: 20px;
     font-weight: 400;
     font-style: normal;
-    width: 136px;
   }
+
   input {
     border: none;
     height: 24px;
@@ -357,30 +394,32 @@ input[type="date"i] {
     display: none;
   }
   .search-details {
-    position: relative;
     display: flex;
-    /* max-width: 25rem;
-    max-height: 76px; */
-    border-radius: 16px;
-    box-shadow: 0px 0.5px 1px rgba(12, 34, 45, 0.09),
-      0px 2px 12px rgba(12, 34, 45, 0.09),
-      inset 0px 0px 0px 1px rgba(12, 34, 45, 0.09);
-    background: white;
-    margin-bottom: 16px;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
   }
   .mobile_show {
     display: block;
     border: 0px;
-  }
-  .mobile-button {
+    max-width: 25.25rem;
+    /* border-radius: 999px;
+    padding: 12px 16px 12px 16px;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    gap: 0px;
     align-items: center;
-    padding: 12px 16px;
-    width: 400px;
-    height: 48px;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    background: var(--background-main-accent-default, #0966d7);
     border-radius: 999px;
-    background-color: #0966d7;
+    flex-shrink: 0;
+    position: relative; */
   }
   .search_button-wrapper {
     width: 25.25rem;
@@ -388,33 +427,18 @@ input[type="date"i] {
     justify-content: center;
     align-items: center;
     display: flex;
-  }
-
-  .search_button {
-    /* max-width: 25rem; */
-    height: 3rem;
-    color: #fff;
-    background-color: #0966d7;
-    border-radius: 4rem;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    text-decoration: none;
+    /* padding: 0px 8px 0px 8px;
     display: flex;
-  }
-
-  .search_button:hover {
-    width: 25.25rem;
-    background-color: #1271f8;
-  }
-
-  .search_button:active {
-    width: 24.75rem;
-    background-color: #045bbe;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative; */
   }
 
   .search_button-2 {
-    width: 100%;
+    width: 25rem;
     height: 3rem;
     color: #fff;
     background-color: #0966d7;
@@ -426,6 +450,14 @@ input[type="date"i] {
     transition: height 0.15s ease-out, width 0.15s ease-out,
       background-color 0.15s ease-out;
     display: flex;
+    /* padding: 0px 8px 0px 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative; */
   }
 
   .search_button-2:hover {
@@ -441,13 +473,10 @@ input[type="date"i] {
   }
 
   .button_link {
-    letter-spacing: 0.01em;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-family: Inter, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    text-decoration: none;
+    color: var(--core-base-white, #ffffff);
+    text-align: left;
+    font: var(--label-l-300, 600 16px/24px "Inter", sans-serif);
+    position: relative;
   }
   &.clicked {
     .search_button-2 {
@@ -473,152 +502,84 @@ input[type="date"i] {
     font-weight: 400;
   }
   .input-item {
-    border: 0px;
-    color: black;
-    padding-left: 16px;
-    width: 268px;
-    height: 76px;
+    border-style: solid;
+    border-color: var(--border-main-default, rgba(12, 34, 45, 0.09));
+    border-width: 0px 1px 0px 0px;
+    padding: 16px;
     display: flex;
-    /* margin: 32px 24px; */
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
+    gap: 4px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+    overflow: hidden;
+  }
+  .title-text {
+    color: var(--content-main-default-caption, #555f66);
+    text-align: left;
+    font: var(--label-l-100, 500 12px/16px "Inter", sans-serif);
+    position: relative;
+    align-self: stretch;
   }
   .input-item_2 {
-    border: 0px;
-    color: black;
-    padding-left: 16px;
-    width: 268px;
-    height: 76px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
+    gap: 4px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
   }
 }
 @media only screen and (max-width: 767px) {
-  .search-component {
-    max-width: 25rem;
-    /* max-height: 76px; */
+  .search-bar,
+  .search-bar * {
+    box-sizing: border-box;
   }
-  .placeholder-font {
-    color: #6f787f;
-    text-align: left;
-    line-height: 24px;
-    font-family: "Inter", sans-serif;
-    /* margin-bottom: 8px; */
-    font-size: 16px;
-    font-weight: 400;
-    font-style: normal;
-    width: 130px;
+  .search-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
   }
-  input {
-    border: none;
-    height: 24px;
-    font-size: 16px;
-    width: 100%;
+  .search-field {
+    background: var(--background-main-default-default, #ffffff);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: var(
+      --elevation-1-dp-box-shadow,
+      0px 2px 12px 0px rgba(12, 34, 45, 0.09),
+      0px 0.5px 1px 0px rgba(12, 34, 45, 0.09),
+      inset 0px 0px 0px 1px rgba(12, 34, 45, 0.09)
+    );
     overflow: hidden;
   }
-  textarea:focus,
-  input:focus {
-    outline: none;
-  }
-
-  .last-button {
-    display: none;
-  }
-  .search-details {
-    position: relative;
-    display: flex;
-    /* width: 25rem; */
-    /* max-height: 96px; */
-    border-radius: 16px;
-    box-shadow: 0px 0.5px 1px rgba(12, 34, 45, 0.09),
-      0px 2px 12px rgba(12, 34, 45, 0.09),
-      inset 0px 0px 0px 1px rgba(12, 34, 45, 0.09);
-    background: white;
-    margin-bottom: 16px;
-  }
-  .mobile_show {
-    display: block;
-    border: 0px;
-  }
-
-  .search_button-wrapper {
-    /* max-width: 25rem; */
-    justify-content: center;
-    display: flex;
-  }
-
-  .search_button-wrapper.show-tablet {
-    width: 100%;
-    /* max-width: 25rem; */
-  }
-  .search_button-2 {
-    width: 100%;
-  }
-  .search_button-2 {
-    /* width: 21.37rem; */
-    height: 3rem;
-    color: #fff;
-    background-color: #0966d7;
-    border-radius: 4rem;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    text-decoration: none;
-    display: flex;
-  }
-
-  .search_button-2:hover {
-    width: 21.37rem;
-    background-color: #1271f8;
-  }
-  .search_button-2:active {
-    width: 21.87rem;
-    height: 2.75rem;
-    background-color: #045bbe;
-  }
-  .button_link {
-    letter-spacing: 0.01em;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-family: Inter, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    text-decoration: none;
-  }
-
-  .button_link.black-bg {
-    color: #6696ff;
-  }
-  .input-item {
-    border: 0px;
-    color: black;
-    padding-left: 16px;
-    width: 268px;
-    height: 96px;
-    display: flex;
-    /* margin: 32px 24px; */
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-  }
-  .input-item_2 {
-    border: 0px;
-    color: black;
-    padding-left: 16px;
-    width: 268px;
-    height: 96px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
+  .inputPlaceholder {
+    top: 36px;
   }
 }
+
 @media only screen and (max-width: 479px) {
-  .search_button-wrapper.show-tablet {
-    width: 100%;
-    max-width: 25rem;
+  .search_button-2 {
+    /* width: 100%;
+    max-width: 25rem; */
+    /* padding: 12px 16px 12px 16px; */
+    max-width: 20rem;
+  }
+  .search_button-wrapper {
+    width: 100% !important;
   }
 }
