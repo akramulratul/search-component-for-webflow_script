@@ -101,9 +101,9 @@
 
 input {
   border: none;
-  height: 20px;
-  font-size: 16px;
-  width: auto;
+  /* height: 20px; */
+  /* font-size: 16px; */
+  /* width: auto; */
   overflow: hidden;
 }
 textarea:focus,
@@ -146,6 +146,12 @@ input[type="date"i] {
   background-color: white !important;
   color: black !important;
   background: white !important;
+  letter-spacing: 0.01em !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
 }
 
 .search_icon-wrap {
@@ -203,6 +209,7 @@ input[type="date"i] {
     sans-serif
   );
   top: 36px;
+  padding-bottom: 5px;
 
   position: absolute;
   width: 96px;
@@ -378,17 +385,17 @@ input[type="date"i] {
     font-style: normal;
   }
 
-  input {
+  /* input {
     border: none;
-    height: 24px;
+    height: 32px;
     font-size: 16px;
     width: 100%;
     overflow: hidden;
-  }
-  textarea:focus,
+  } */
+  /* textarea:focus,
   input:focus {
     outline: none;
-  }
+  } */
 
   .last-button {
     display: none;
@@ -572,14 +579,19 @@ input[type="date"i] {
   }
 }
 
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 375px) {
   .search_button-2 {
-    /* width: 100%;
-    max-width: 25rem; */
-    /* padding: 12px 16px 12px 16px; */
-    max-width: 20rem;
+    width: 23.4rem;
   }
   .search_button-wrapper {
-    width: 100% !important;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .search_button-2 {
+    width: 20rem;
+  }
+  .search_button-wrapper {
+    width: 100%;
   }
 }

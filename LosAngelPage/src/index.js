@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { format } from "date-fns";
+import { useMediaQuery } from "react-responsive";
 import "./assets/styles/search.css";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-Modal.setAppElement(document.getElementById("search_down"));
+Modal.setAppElement(document.getElementById("react-target"));
 
 function App() {
   const [checkInSelected, setCheckInSelected] = useState(false);
@@ -25,7 +26,7 @@ function App() {
   console.log("CheckIn", inDate);
   console.log("CheckOut", outDate);
 
-  const isSmallScreen = window.innerWidth <= 991;
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 991px)" });
   const [showPlaceholder, setShowPlaceholder] = useState(true);
 
   useEffect(() => {
@@ -194,15 +195,14 @@ function App() {
             <div className="button_link">Search hotel deals</div>
           </a>
         </div>
-        <div className="background"></div>
       </div>
     </div>
-    /* </div> */
+    // </div>
   );
 }
 
 ReactDOM.render(
   React.createElement(App, {}, null),
-  document.getElementById("search_down")
+  document.getElementById("react-target")
 );
 reportWebVitals();
