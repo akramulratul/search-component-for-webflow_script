@@ -83,7 +83,7 @@ function App() {
     <div className="search-component search-bar">
       <div className="search-field ">
         <div className="search-details">
-          <div className="input-item first-input">
+          <div className="input-item">
             <label className="title-text">Check-in</label>
             {isSmallScreen ? (
               <>
@@ -113,7 +113,7 @@ function App() {
               />
             )}
           </div>
-          <div className="input-item_2 middle-input">
+          <div className="input-item middle-input">
             <label className="title-text">Check-out</label>
             {isSmallScreen ? (
               <>
@@ -134,11 +134,7 @@ function App() {
                 selected={outDate}
                 minDate={inDate || format(new Date(), "yyyy-MM-dd")}
                 onChange={(date) => {
-                  console.log("New Date", new Date(date));
-                  console.log("New IN Date", new Date(inDate));
-                  console.log("New out", new Date(outDate));
                   setOutDate(date);
-                  console.log("After Change outdate", outDate);
                   setCheckOutSelected(true);
                 }}
                 value={
@@ -173,7 +169,7 @@ function App() {
         </div>
       </div>
       <div className="mobile_show">
-        <div className="search_button-wrapper show-tablet">
+        <div className="search_button-wrapper">
           <a href="#" onClick={handleMobileSearch} className="search_button-2">
             <svg
               width="24"
@@ -197,7 +193,7 @@ function App() {
         </div>
       </div>
     </div>
-    // </div>
+    /* </div> */
   );
 }
 

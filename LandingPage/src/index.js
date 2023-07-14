@@ -13,10 +13,10 @@ Modal.setAppElement(document.getElementById("react-target"));
 
 function App() {
   const urlBases = {
-    0: `https://joingopher.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.3&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.95&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.95&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.4`,
-    1: `https://joingopher.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=North%20Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.33589&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.958628&query%5Blocation%5D%5Bbbox%5D%5B2%5D=36.1848302&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.2120179`,
-    2: `https://joingopher.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Santiago%20de%20las%20Vegas%2C%20La%20Habana%2C%20Cuba%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Santiago%20de%20las%20Vegas&query%5Blocation%5D%5Bstate%5D=La%20Habana%2C%20Cuba&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=22.982719&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-82.373835&query%5Blocation%5D%5Bbbox%5D%5B2%5D=22.96151&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-82.401701`,
-    3: `https://joingopher.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20New%20Mexico%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Las%20Vegas%2C%20New%20Mexico&query%5Blocation%5D%5Bstate%5D=New%20Mexico&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=35.631469&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-105.18777&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.557199&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-105.252031`,
+    0: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.3&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.95&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.95&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.4`,
+    1: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=North%20Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.33589&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.958628&query%5Blocation%5D%5Bbbox%5D%5B2%5D=36.1848302&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.2120179`,
+    2: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Santiago%20de%20las%20Vegas%2C%20La%20Habana%2C%20Cuba%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Santiago%20de%20las%20Vegas&query%5Blocation%5D%5Bstate%5D=La%20Habana%2C%20Cuba&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=22.982719&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-82.373835&query%5Blocation%5D%5Bbbox%5D%5B2%5D=22.96151&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-82.401701`,
+    3: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20New%20Mexico%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Las%20Vegas%2C%20New%20Mexico&query%5Blocation%5D%5Bstate%5D=New%20Mexico&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=35.631469&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-105.18777&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.557199&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-105.252031`,
   };
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [location, setLocation] = useState("");
@@ -90,7 +90,7 @@ function App() {
 
   const handleMobileSearch = () => {
     const encodedLocation = encodeURIComponent(location);
-    const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
+    const url = `https://theguestbook.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     window.open(url, "_blank");
   };
 
@@ -124,7 +124,7 @@ function App() {
   ];
 
   return (
-    <div className="application_backgroud">
+    // <div className="application_backgroud">
       <div className="search_container">
         <div className="search_body big">
           <div className="search_content big">
@@ -132,32 +132,43 @@ function App() {
               <div className="search_headline">Location</div>
               <div>
                 {/* <LocationSearchInput /> */}
+                <div className="inputText">
+                  <input
+                    className="inputSize"
+                    type="text"
+                    value={inputValue}
+                    placeholder="Anywhere"
+                    onClick={() => setShowDropdown(!showDropdown)}
+                  />
+                </div>
                 <div className="dropDown">
                   {showDropdown && (
                     <div className="search-bar-dropdown">
                       <div className="dropdown">
                         <div className="frame">
                           {options.map((option, index) => (
-                            <div className="list-item" key={index}>
-                              <div
-                                className="frame2"
-                                onClick={() => {
-                                  setInputValue(
-                                    `${option.place}, ${option.state}, `
-                                  );
-                                  setSelectedIndex(index);
-                                  setShowDropdown(false);
-                                }}
-                                // onChange={handleDropdownChange}
-                              >
-                                <div className="label">{option.place}</div>
-                                <div className="caption">{option.state}</div>
+                            <div className="active">
+                              <div className="list-item" key={index}>
+                                <div
+                                  className="frame2"
+                                  onClick={() => {
+                                    setInputValue(
+                                      `${option.place}, ${option.state}, `
+                                    );
+                                    setSelectedIndex(index);
+                                    setShowDropdown(false);
+                                  }}
+                                  // onChange={handleDropdownChange}
+                                >
+                                  <div className="label">{option.place}</div>
+                                  <div className="caption">{option.state}</div>
+                                </div>
+                                <img
+                                  className="icon"
+                                  src={option.imageUrl}
+                                  alt={option.place}
+                                />
                               </div>
-                              <img
-                                className="icon"
-                                src={option.imageUrl}
-                                alt={option.place}
-                              />
                             </div>
                           ))}
                         </div>
@@ -165,51 +176,51 @@ function App() {
                     </div>
                   )}
                 </div>
-                <div className="inputText">
-                  <input
-                    type="text"
-                    value={inputValue}
-                    placeholder="Anywhere"
-                    onClick={() => setShowDropdown(!showDropdown)}
-                  />
-                </div>
               </div>
             </div>
             <div className="search_divider-wrapper hide-tablet">
               <div className="search_divider"></div>
             </div>
             <div className="search_text-wrapper hide-tablet">
-              <div className="search_headline">Check in</div>
-              <DatePicker
-                onChange={(date) => {
-                  setInDate(date);
-                  console.log("After Change indate", inDate);
-                  setCheckInSelected(true);
-                }}
-                minDate={new Date()}
-                showDisabledMonthNavigation
-                selected={inDate}
-                value={checkInSelected ? format(inDate, "yyyy-MM-dd") : "Today"}
-                className="placeholder-font"
-              />
+              <label className="search_headline">Check in</label>
+              <div>
+                <DatePicker
+                  onChange={(date) => {
+                    setInDate(date);
+                    console.log("After Change indate", inDate);
+                    setCheckInSelected(true);
+                  }}
+                  minDate={new Date()}
+                  showDisabledMonthNavigation
+                  selected={inDate}
+                  value={
+                    checkInSelected ? format(inDate, "yyyy-MM-dd") : "Today"
+                  }
+                  className="placeholder-font"
+                />
+              </div>
             </div>
             <div className="search_divider-wrapper hide-tablet">
               <div className="search_divider"></div>
             </div>
             <div className="search_text-wrapper hide-tablet">
               <div className="search_headline">Check-out</div>
-              <DatePicker
-                selected={outDate}
-                minDate={inDate || format(new Date(), "yyyy-MM-dd")}
-                onChange={(date) => {
-                  setOutDate(date);
-                  setCheckOutSelected(true);
-                }}
-                value={
-                  checkOutSelected ? format(outDate, "yyyy-MM-dd") : "Next Week"
-                }
-                className="placeholder-font"
-              />
+              <div>
+                <DatePicker
+                  selected={outDate}
+                  minDate={inDate || format(new Date(), "yyyy-MM-dd")}
+                  onChange={(date) => {
+                    setOutDate(date);
+                    setCheckOutSelected(true);
+                  }}
+                  value={
+                    checkOutSelected
+                      ? format(outDate, "yyyy-MM-dd")
+                      : "Next Week"
+                  }
+                  className="placeholder-font"
+                />
+              </div>
             </div>
             <div className="search_content show-tablet">
               <div className="search_divider-wrapper-horizontal">
@@ -301,14 +312,10 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
 
-// ReactDOM.render(
-//   React.createElement(App, {}, null),
-//   document.getElementById("react-target")
-// );
 import { createRoot } from "react-dom/client";
 const container = document.getElementById("react-target");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
