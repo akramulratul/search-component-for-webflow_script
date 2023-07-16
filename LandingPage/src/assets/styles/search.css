@@ -7,6 +7,14 @@
 .application_backgroud {
   background-color: black;
   height: 150px;
+  height: 100vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper {
+  display: flex;
 }
 .search-component {
   max-width: 640px;
@@ -539,7 +547,7 @@ input[type="date"i] {
   align-items: flex-start;
   justify-content: flex-start;
   width: 240px;
-  height: 264px;
+  /* height: 264px; */
   position: absolute;
   z-index: 2;
 }
@@ -585,6 +593,8 @@ input[type="date"i] {
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
+  background-color: transparent;
+  border-radius: 10px;
   color: var(--content-main-default-text, #363d42);
   text-align: left;
   transition: height 0.15s ease-out, width 0.15s ease-out,
@@ -593,15 +603,13 @@ input[type="date"i] {
   font: var(--text-t-200-desktop-regular, 400 14px/20px "Inter", sans-serif);
 }
 .active {
-  height: 66px;
-  width: 234px;
-
+  height: 68px;
+  width: 236px;
   border-radius: 10px;
 }
 .inputSize {
   width: 100%;
   color: var(--content-main-default-placeholder, #6f787f);
-
   /* Text/T400/Desktop/Regular */
   font-family: Inter;
   font-size: 20px;
@@ -614,14 +622,14 @@ input[type="date"i] {
   background-color: #1271f8;
   border-radius: 10px;
   color: white;
-  height: 64px;
-  width: 233px;
+  height: 68px;
+  width: 236px;
 }
 .list-item:hover svg {
   color: white;
 }
 .list-item:active {
-  width: 230px;
+  width: 228px;
   height: 60px;
 }
 
@@ -646,13 +654,16 @@ input[type="date"i] {
   align-self: stretch;
 }
 .icon {
-  opacity: 0.8500000238418579;
+  opacity: 1;
   flex-shrink: 0;
   position: relative;
   overflow: visible;
 }
 .dropDown {
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  position: absolute;
+  margin-bottom: 663px;
+  margin-right: 820px;
 }
 .inputText {
   display: block;
@@ -661,6 +672,61 @@ input[type="date"i] {
   position: static !important;
 }
 @media only screen and (max-width: 991px) {
+  .dropDown {
+    /* margin-top: 10px; */
+    position: absolute;
+    margin-bottom: 60px;
+    margin-right: 375px;
+  }
+
+  .search-bar-dropdown {
+    width: 326px;
+    /* height: 264px; */
+    position: absolute;
+    z-index: 2;
+  }
+
+  .frame {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+  }
+
+  .active {
+    height: 68px;
+    width: 322px;
+    border-radius: 10px;
+  }
+  .inputSize {
+    width: 100%;
+    color: var(--content-main-default-placeholder, #6f787f);
+    /* Text/T400/Desktop/Regular */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+  }
+
+  .list-item:hover {
+    background-color: #1271f8;
+    border-radius: 10px;
+    color: white;
+    height: 68px;
+    width: 322px;
+  }
+  .list-item:hover svg {
+    color: white;
+  }
+  .list-item:active {
+    width: 314px;
+    height: 60px;
+  }
   .search-component {
     width: 25rem;
     max-height: 76px;
@@ -969,6 +1035,61 @@ input[type="date"i] {
   /* New Search system */
   .search_body.big {
     align-items: center;
+  }
+  .dropDown {
+    /* margin-top: 10px; */
+    position: absolute;
+    margin-bottom: 60px;
+    margin-right: 328px;
+  }
+
+  .search-bar-dropdown {
+    max-width: 326px;
+    /* height: 264px; */
+    position: absolute;
+    z-index: 2;
+  }
+
+  .frame {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+  }
+
+  .active {
+    height: 68px;
+    width: 326px;
+    border-radius: 10px;
+  }
+  .inputSize {
+    width: 100%;
+    color: var(--content-main-default-placeholder, #6f787f);
+    /* Text/T400/Desktop/Regular */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+  }
+
+  .list-item:hover {
+    background-color: #1271f8;
+    border-radius: 10px;
+    color: white;
+    height: 68px;
+    width: 322px;
+  }
+  .list-item:hover svg {
+    color: white;
+  }
+  .list-item:active {
+    width: 326px;
+    height: 60px;
   }
   .search_content {
     max-width: 21.625rem;

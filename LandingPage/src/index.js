@@ -124,7 +124,42 @@ function App() {
   ];
 
   return (
-    // <div className="application_backgroud">
+    <div className="application_backgroud">
+      <div className="dropDown">
+        {showDropdown && (
+          <div className="search-bar-dropdown">
+            <div className="dropdown">
+              <div className="frame">
+                {options.map((option, index) => (
+                  <div className="active">
+                    <div className="wrapper">
+                      <div className="list-item" key={index}>
+                        <div
+                          className="frame2"
+                          onClick={() => {
+                            setInputValue(`${option.place}`);
+                            setSelectedIndex(index);
+                            setShowDropdown(false);
+                          }}
+                          // onChange={handleDropdownChange}
+                        >
+                          <div className="label">{option.place}</div>
+                          <div className="caption">{option.state}</div>
+                        </div>
+                        <img
+                          className="icon"
+                          src={option.imageUrl}
+                          alt={option.place}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="search_container">
         <div className="search_body big">
           <div className="search_content big">
@@ -140,41 +175,6 @@ function App() {
                     placeholder="Anywhere"
                     onClick={() => setShowDropdown(!showDropdown)}
                   />
-                </div>
-                <div className="dropDown">
-                  {showDropdown && (
-                    <div className="search-bar-dropdown">
-                      <div className="dropdown">
-                        <div className="frame">
-                          {options.map((option, index) => (
-                            <div className="active">
-                              <div className="list-item" key={index}>
-                                <div
-                                  className="frame2"
-                                  onClick={() => {
-                                    setInputValue(
-                                      `${option.place}, ${option.state}, `
-                                    );
-                                    setSelectedIndex(index);
-                                    setShowDropdown(false);
-                                  }}
-                                  // onChange={handleDropdownChange}
-                                >
-                                  <div className="label">{option.place}</div>
-                                  <div className="caption">{option.state}</div>
-                                </div>
-                                <img
-                                  className="icon"
-                                  src={option.imageUrl}
-                                  alt={option.place}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -312,7 +312,7 @@ function App() {
           </div>
         </div>
       </div>
-    // </div>
+    </div>
   );
 }
 
