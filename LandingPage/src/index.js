@@ -101,59 +101,58 @@ function App() {
       place: "Las Vegas",
       state: "Nevada, United States",
       imageUrl:
-        "https://res.cloudinary.com/dfjttf1x6/image/upload/v1687436053/mappin_nphngj.png",
+        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
     },
     {
       place: "North Las Vegas",
       state: "Nevada, United States",
       imageUrl:
-        "https://res.cloudinary.com/dfjttf1x6/image/upload/v1687436053/mappin_nphngj.png",
+        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
     },
     {
       place: "Santiago de las Vegas",
       state: "La Habana, Cuba",
       imageUrl:
-        "https://res.cloudinary.com/dfjttf1x6/image/upload/v1687436053/mappin_nphngj.png",
+        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
     },
     {
       place: "Las Vegas",
       state: "New Mexico",
       imageUrl:
-        "https://res.cloudinary.com/dfjttf1x6/image/upload/v1687436053/mappin_nphngj.png",
+        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
     },
   ];
 
   return (
-    <div className="application_backgroud">
+    // <div className="application_backgroud">
+    <>
       <div className="dropDown">
         {showDropdown && (
           <div className="search-bar-dropdown">
             <div className="dropdown">
               <div className="frame">
                 {options.map((option, index) => (
-                  <div className="active">
-                    <div className="wrapper">
-                      <div className="list-item" key={index}>
-                        <div
-                          className="frame2"
-                          onClick={() => {
-                            setInputValue(`${option.place}`);
-                            setSelectedIndex(index);
-                            setShowDropdown(false);
-                          }}
-                          // onChange={handleDropdownChange}
-                        >
-                          <div className="label">{option.place}</div>
-                          <div className="caption">{option.state}</div>
-                        </div>
-                        <img
-                          className="icon"
-                          src={option.imageUrl}
-                          alt={option.place}
-                        />
+                  <dev className="active">
+                    <div className="list-item" key={index}>
+                      <div
+                        className="frame2"
+                        onClick={() => {
+                          setInputValue(`${option.place}`);
+                          setSelectedIndex(index);
+                          setShowDropdown(false);
+                        }}
+                        // onChange={handleDropdownChange}
+                      >
+                        <div className="label">{option.place}</div>
+                        <div className="caption">{option.state}</div>
                       </div>
+                      <img
+                        className="icon"
+                        src={option.imageUrl}
+                        alt={option.place}
+                      />
                     </div>
-                  </div>
+                  </dev>
                 ))}
               </div>
             </div>
@@ -222,7 +221,7 @@ function App() {
                 />
               </div>
             </div>
-            <div className="search_content show-tablet">
+            <div className="search_content show-tablets">
               <div className="search_divider-wrapper-horizontal">
                 <div className="search_divider-horizontal"></div>
               </div>
@@ -284,7 +283,7 @@ function App() {
               </svg>
             </div>
           </a>
-          <div className="search_button-wrapper show-tablet">
+          <div className="search_button-wrapper show-tablets">
             <a
               href="#"
               onClick={handleMobileSearch}
@@ -312,7 +311,8 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </>
   );
 }
 

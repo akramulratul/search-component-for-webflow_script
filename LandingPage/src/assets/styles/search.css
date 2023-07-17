@@ -13,6 +13,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .wrapper {
   display: flex;
 }
@@ -127,7 +128,7 @@
 
 input {
   border: none;
-  height: 20px;
+  height: 24px;
   font-size: 16px;
   width: auto;
   overflow: hidden;
@@ -494,20 +495,16 @@ input[type="date"i] {
   max-width: 100%;
   display: inline-block;
 } */
-.interesting-fact_image.show-tablet {
+.interesting-fact_image.show-tablets {
   display: none;
 }
-.show-tablet,
-.nav_bar-state-effects,
-.nav_bg,
-.nav_bar-icon-close,
-.logo-nav-open {
+.show-tablets {
   display: none;
 }
-.search_content.show-tablet {
+.search_content.show-tablets {
   display: none;
 }
-.button_wrapper.show-tablet {
+.button_wrapper.show-tablets {
   display: none;
 }
 .search_divider-wrapper-horizontal {
@@ -546,8 +543,8 @@ input[type="date"i] {
   gap: 0px;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 240px;
-  /* height: 264px; */
+  width: 15rem;
+  height: 16.5rem;
   position: absolute;
   z-index: 2;
 }
@@ -555,7 +552,7 @@ input[type="date"i] {
 .dropdown {
   background: var(--background-main-default-default, #ffffff);
   border-radius: 16px;
-  padding: 4px 4px 4px 4px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -593,44 +590,64 @@ input[type="date"i] {
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  background-color: transparent;
-  border-radius: 10px;
-  color: var(--content-main-default-text, #363d42);
-  text-align: left;
   transition: height 0.15s ease-out, width 0.15s ease-out,
     background-color 0.15s ease-out;
-  color: var(--content-main-default-caption, #555f66);
-  font: var(--text-t-200-desktop-regular, 400 14px/20px "Inter", sans-serif);
+  background-color: transparent;
+  border-radius: 12px;
 }
 .active {
-  height: 68px;
-  width: 236px;
-  border-radius: 10px;
+  align-self: stretch;
 }
-.inputSize {
-  width: 100%;
-  color: var(--content-main-default-placeholder, #6f787f);
-  /* Text/T400/Desktop/Regular */
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 32px; /* 160% */
+.list-item:hover .label,
+.list-item:hover .caption {
+  color: white;
+}
+.list-item:hover .icon {
+  fill: white;
+  content: url("https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b5763404f2fbab0d8ec588_hoverLocation.svg");
 }
 
-.list-item:hover {
-  background-color: #1271f8;
-  border-radius: 10px;
-  color: white;
-  height: 68px;
-  width: 236px;
+.list-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff; /* hover background color */
+  transition: background 0.2s ease-out;
 }
-.list-item:hover svg {
-  color: white;
+
+.list-item:hover::before {
+  background: #0966d7; /* hover background color */
+  border-radius: 12px;
 }
-.list-item:active {
-  width: 228px;
-  height: 60px;
+
+.list-item:active::before {
+  /* animation: activeState 0.5s forwards; */
+  width: 14rem;
+  height: 3.75rem;
+  top: 50%;
+  left: 50%;
+  background: #045bbe;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes activeState {
+  from {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  to {
+    top: 50%;
+    left: 50%;
+    width: 14rem;
+    height: 3.75rem;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .frame2 {
@@ -643,11 +660,14 @@ input[type="date"i] {
   position: relative;
 }
 .label {
+  color: var(--content-main-default-text, #363d42);
+  text-align: left;
+  font: var(--text-t-200-desktop-regular, 400 14px/20px "Inter", sans-serif);
   position: relative;
   align-self: stretch;
 }
-
 .caption {
+  color: var(--content-main-default-caption, #555f66);
   text-align: left;
   font: var(--text-t-100-desktop-regular, 500 12px/16px "Inter", sans-serif);
   position: relative;
@@ -664,6 +684,16 @@ input[type="date"i] {
   position: absolute;
   margin-bottom: 663px;
   margin-right: 820px;
+}
+.inputSize {
+  width: 100%;
+  color: var(--content-main-default-placeholder, #6f787f);
+  /* Text/T400/Desktop/Regular */
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 160% */
 }
 .inputText {
   display: block;
@@ -697,11 +727,6 @@ input[type="date"i] {
     position: relative;
   }
 
-  .active {
-    height: 68px;
-    width: 322px;
-    border-radius: 10px;
-  }
   .inputSize {
     width: 100%;
     color: var(--content-main-default-placeholder, #6f787f);
@@ -713,7 +738,7 @@ input[type="date"i] {
     line-height: 32px; /* 160% */
   }
 
-  .list-item:hover {
+  /* .list-item:hover {
     background-color: #1271f8;
     border-radius: 10px;
     color: white;
@@ -726,6 +751,31 @@ input[type="date"i] {
   .list-item:active {
     width: 314px;
     height: 60px;
+  } */
+  .list-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff; /* hover background color */
+    transition: background 0.2s ease-out;
+  }
+
+  .list-item:hover::before {
+    background: #0966d7; /* hover background color */
+    border-radius: 12px;
+  }
+
+  .list-item:active::before {
+    /* animation: activeState 0.5s forwards; */
+    width: 19.62rem;
+    height: 3.75rem;
+    top: 50%;
+    left: 50%;
+    background: #045bbe;
+    transform: translate(-50%, -50%);
   }
   .search-component {
     width: 25rem;
@@ -906,18 +956,18 @@ input[type="date"i] {
     }
   }
 
-  .interesting-fact_image.show-tablet {
+  .interesting-fact_image.show-tablets {
     object-fit: cover;
     display: block;
   }
-  .show-tablet {
+  .show-tablets {
     order: 1;
     display: block;
   }
-  .search_content.show-tablet {
+  .search_content.show-tablets {
     display: flex;
   }
-  .button_wrapper.show-tablet {
+  .button_wrapper.show-tablets {
     display: block;
   }
   .search_divider-wrapper-horizontal {
@@ -1060,12 +1110,6 @@ input[type="date"i] {
     flex: 1;
     position: relative;
   }
-
-  .active {
-    height: 68px;
-    width: 326px;
-    border-radius: 10px;
-  }
   .inputSize {
     width: 100%;
     color: var(--content-main-default-placeholder, #6f787f);
@@ -1077,7 +1121,7 @@ input[type="date"i] {
     line-height: 32px; /* 160% */
   }
 
-  .list-item:hover {
+  /* .list-item:hover {
     background-color: #1271f8;
     border-radius: 10px;
     color: white;
@@ -1090,7 +1134,7 @@ input[type="date"i] {
   .list-item:active {
     width: 326px;
     height: 60px;
-  }
+  } */
   .search_content {
     max-width: 21.625rem;
   }
@@ -1098,7 +1142,7 @@ input[type="date"i] {
     width: 100%;
     max-width: 8.6875rem;
   }
-  .search_button-wrapper.show-tablet {
+  .search_button-wrapper.show-tablets {
     width: 100%;
     max-width: 21.375rem;
   }
