@@ -94,9 +94,10 @@ function LocationSearchInput() {
         <div>
           <input
             {...getInputProps({
-              placeholder: "AnyWhere",
+              placeholder: "Any where",
               className: "location-search-input",
             })}
+            
           />
           <div className="autocomplete-dropdown-container">
             {loading && <div>Loading...</div>}
