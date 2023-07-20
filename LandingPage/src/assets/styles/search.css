@@ -19,10 +19,10 @@ input:focus {
 .application_backgroud {
   background-color: black;
   display: flex;
-  /* justify-content: center;
+  justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw; */
+  width: 100vw;
 }
 /* react patepicker  */
 .react-datepicker-wrapper {
@@ -220,6 +220,7 @@ input[type="date"i] {
   height: 16.5rem;
   position: absolute;
   z-index: 2;
+  overflow-y: auto;
 }
 
 .dropdown {
@@ -251,6 +252,7 @@ input[type="date"i] {
   align-self: stretch;
   flex: 1;
   position: relative;
+  overflow-y: auto;
 }
 .list-item {
   padding: 12px 16px 12px 16px;
@@ -340,14 +342,14 @@ input[type="date"i] {
 .dropDown {
   /* margin-top: 10px; */
   position: absolute;
-  margin-bottom: 663px;
+  margin-bottom: 640px;
   margin-right: 820px;
 }
 
 /* Body design of the page */
 .search_container {
   text-align: left;
-  /* justify-content: center; */
+  justify-content: center;
   display: flex;
 }
 .search_body {
@@ -544,7 +546,7 @@ input[type="date"i] {
 .inputPlaceholder {
   background-color: rgb(255, 255, 255);
   position: absolute;
-  top: 113px;
+  top: 479px;
   width: 129px;
   padding: 4px 0px;
   pointer-events: none;
@@ -563,8 +565,8 @@ input[type="date"i] {
   .dropDown {
     /* margin-top: 10px; */
     position: absolute;
-    margin-top: 81px;
-    margin-left: 10px;
+    margin-top: 585px;
+    margin-left: 453px;
   }
 
   .search-bar-dropdown {
@@ -583,6 +585,7 @@ input[type="date"i] {
     align-self: stretch;
     flex: 1;
     position: relative;
+    overflow-y: auto;
   }
   .list-item::before {
     content: "";
@@ -613,7 +616,7 @@ input[type="date"i] {
   .search_container {
     grid-row-gap: 1rem;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
   }
   .search_body {
     width: 25rem;
@@ -793,8 +796,8 @@ input[type="date"i] {
   /* New Search Dropdown */
   .dropDown {
     position: absolute;
-    margin-top: 85px;
-    margin-left: -1px;
+    margin-top: 593px;
+    margin-left: 487px;
   }
 
   .search-bar-dropdown {

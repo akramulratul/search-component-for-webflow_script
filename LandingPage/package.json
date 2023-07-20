@@ -2,6 +2,7 @@
   "name": "search",
   "version": "1.0.0",
   "description": "",
+  "proxy": "https://joingopher.com",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development --progress --color --port 3000",
@@ -13,11 +14,12 @@
   "dependencies": {
     "@reach/combobox": "^0.18.0",
     "@react-google-maps/api": "^2.18.1",
+    "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "process": "^0.11.10",
-    "react": "^18.2.0",
+    "react": "^17.0.1",
     "react-datepicker": "^4.12.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^17.0.1",
     "react-google-places-autocomplete": "^4.0.1",
     "react-modal": "^3.16.1",
     "react-places-autocomplete": "^7.3.0",

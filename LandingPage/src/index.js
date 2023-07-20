@@ -4,6 +4,7 @@ import reportWebVitals from "./reportWebVitals";
 import { format } from "date-fns";
 import "./assets/styles/search.css";
 import Modal from "react-modal";
+import SearchBar from "./components/SearchBar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
@@ -24,7 +25,7 @@ function App() {
   const handleDropdownChange = (e) => {
     setLocation(e.target.value);
   };
-
+  console.log(location);
   // const getUrlBase = () => {
   //   return urlBases[location] || urlBases["Las Vegas"]; // Default to Las Vegas if no location is selected or if the selected location is not in the urlBases map.
   // };
@@ -124,8 +125,7 @@ function App() {
   ];
 
   return (
-    // <div className="application_backgroud">
-    <>
+    <div className="application_backgroud">
       <div className="dropDown">
         {showDropdown && (
           <div className="search-bar-dropdown">
@@ -165,7 +165,7 @@ function App() {
             <div className="search_text-wrapper">
               <div className="search_headline">Location</div>
               {/* <div>Anywhere</div> */}
-              <div className="inputText">
+              {/* <div className="inputText">
                 <input
                   className="inputSize"
                   type="text"
@@ -173,7 +173,8 @@ function App() {
                   placeholder="Anywhere"
                   onClick={() => setShowDropdown(!showDropdown)}
                 />
-              </div>
+              </div> */}
+              <SearchBar setLocation={setLocation} />
               {/* <LocationSearchInput /> */}
             </div>
             <div className="search_divider-wrapper hide-tablet">
@@ -409,13 +410,18 @@ function App() {
           </a>
         </div>
       </div>
-    {/* </div> */}
-    </>
+    </div>
   );
 }
 
-import { createRoot } from "react-dom/client";
-const container = document.getElementById("react-target");
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<App tab="home" />);
+// import { createRoot } from "react-dom/client";
+// const container = document.getElementById("react-target");
+// const root = createRoot(container); // createRoot(container!) if you use TypeScript
+// root.render(<App tab="home" />);
+ReactDOM.render(
+  <React.StrictMode>
+    <App tab="home" />
+  </React.StrictMode>,
+  document.getElementById("react-target")
+);
 reportWebVitals();
