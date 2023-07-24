@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function SearchBar(props) {
+function SearchBar({
+  setSelectedCityName,
+  setSelectedCityCords,
+  onCitySelect,
+}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectCity, setSelectCity] = useState(null);
+  useEffect(() => {
+    if (selectCity) {
+      onCitySelect(selectCity);
+    }
+  }, [selectCity, onCitySelect]);
   useEffect(() => {
     if (query.length > 0) {
       setIsLoading(true);
       axios
-        .get(`http://localhost:3001/api/v1/search/typeahead?query=${query}`)
+        .get(
+          `https://guest-book-backend.vercel.app/api/v1/search/typeahead?query=${query}`
+        )
         .then((res) => {
           setResults(res.data); // update results state with fetched data
         })
@@ -24,40 +35,39 @@ function SearchBar(props) {
     }
   }, [query]); // execute effect whenever the query state changes
 
-  // useEffect(() => {
-  //   if (query.length > 0) {
-  //     setShowDropdown(true);
-  //   } else {
-  //     setShowDropdown(false);
-  //   }
-  // }, [query]);
-
   useEffect(() => {
-    if (selectedCity !== null) {
-      const { searchable_id: cityId, type } = selectedCity;
-      axios
-        .get(
-          `http://localhost:3001/api/v1/search/get_coords?search_type=City&query=${cityId}`
-        )
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.error(err));
+    if (selectCity) {
+      const { searchable_type: type } = selectCity;
+      if (type) {
+        const formattedType = type.charAt(0).toUpperCase() + type.slice(1);
+        axios
+          .get(
+            `https://guest-book-backend.vercel.app/api/v1/search/get_coords?&search_type=${formattedType}&query=${selectCity.searchable_id}`
+          )
+          .then((res) => {
+            setSelectedCityCords({
+              neBoxLat: res.data.ne_box_lat,
+              neBoxLng: res.data.ne_box_lng,
+              swBoxLat: res.data.sw_box_lat,
+              swBoxLng: res.data.sw_box_lng,
+            });
+          })
+          .catch((err) => console.error(err));
+      }
     }
-  }, [selectedCity]);
+  }, [selectCity]);
 
-  const [selectedIndex, setSelectedIndex] = useState(null);
-  console.log(showDropdown);
   return (
     <div>
       <input
+        className="inputSize"
         type="text"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
           setShowDropdown(true);
         }}
-        placeholder="Any Where"
+        placeholder="Anywhere"
         // onFocus={() => setIsFocused(true)}
       />
       {query.length > 0 && showDropdown && (
@@ -74,21 +84,35 @@ function SearchBar(props) {
                         <div
                           className="frame2"
                           onClick={() => {
-                            setQuery(result.city_name);
-                            // setSelectedIndex(index);
+                            let locationName = "";
+                            if (result.hotel_name) {
+                              locationName = result.hotel_name;
+                            } else if (result.city_name) {
+                              locationName = result.city_name;
+                            } else if (result.state_name) {
+                              locationName = result.state_name;
+                            }
+                            setQuery(result.content);
                             setShowDropdown(false);
-                            setSelectedCity(result);
-                            props.setLocation(result.city_name); // update location state in parent component
+                            setSelectCity(result);
+                            setSelectedCityName({
+                              cityName: result.city_name,
+                              stateName: result.state_name,
+                              countryName: result.country_name,
+                              hotelName: result.hotel_name,
+                            });
                           }}
-                          // onChange={handleDropdownChange}
                         >
                           <div className="label">
                             {result.hotel_name
                               ? result.hotel_name
-                              : result.city_name}
+                              : result.city_name
+                              ? result.city_name
+                              : result.state_name}
                           </div>
                           <div className="caption">
-                            {result.city_name}, {result.country_name}
+                            {result.state_name}, {result.city_name},
+                            {result.country_name}
                           </div>
                         </div>
                         <img

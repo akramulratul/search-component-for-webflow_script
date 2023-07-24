@@ -25,7 +25,6 @@ function App() {
   const handleDropdownChange = (e) => {
     setLocation(e.target.value);
   };
-  console.log(location);
   // const getUrlBase = () => {
   //   return urlBases[location] || urlBases["Las Vegas"]; // Default to Las Vegas if no location is selected or if the selected location is not in the urlBases map.
   // };
@@ -44,7 +43,30 @@ function App() {
 
   const isSmallScreen = window.innerWidth <= 768;
   const [showPlaceholder, setShowPlaceholder] = useState(true);
+  const [selectedCityCords, setSelectedCityCords] = useState({
+    neBoxLat: "",
+    neBoxLng: "",
+    swBoxLat: "",
+    swBoxLng: "",
+  });
+  const [selectedCityName, setSelectedCityName] = useState({
+    cityName: "",
+    stateName: "",
+    countryName: "",
+    hotelName: "",
+  });
+  const [selectedCity, setSelectedCity] = useState(null);
+  // Log selectedCity to console
 
+  const handleCitySelection = (city) => {
+    setSelectedCity(city);
+    // Here you can add your URL generation and redirection logic
+  };
+
+  useEffect(() => {
+    console.log(selectedCityName);
+  }, [selectedCityName]);
+  useEffect(() => {}, [selectedCityCords]);
   useEffect(() => {
     const currentDate = format(new Date(), "yyyy-MM-dd");
     const NextDate = format(
@@ -81,84 +103,105 @@ function App() {
     }
   }, [inDate, outDate]);
   const handleSearch = () => {
-    const encodedLocation = encodeURIComponent(location);
+    // const encodedLocation = encodeURIComponent(location);
     //const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
-    const urlBase =
-      selectedIndex !== null ? urlBases[selectedIndex] : urlBases["0"];
-    const url = `${urlBase}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
-    window.open(url, "_blank");
+    // const urlBase =
+    //   selectedIndex !== null ? urlBases[selectedIndex] : urlBases["0"];
+    // const url = `${urlBase}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
+    let baseUrl = "";
+    if (selectedCity.searchable_type === "City") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.stateName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLng
+      )}&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23`;
+    } else if (selectedCity.searchable_type === "SearchPageHotels") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.stateName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
+        selectedCityName.hotelName
+      )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
+        selectedCityName.stateName
+      )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}`;
+    } else if (selectedCity.searchable_type === "States") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.city_name
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.state_name
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.country_name
+      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLng
+      )}`;
+    }
+    window.open(baseUrl, "_blank");
   };
 
   const handleMobileSearch = () => {
-    const encodedLocation = encodeURIComponent(location);
-    const url = `https://theguestbook.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
+    // const encodedLocation = encodeURIComponent(location);
+    // const url = `https://theguestbook.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     window.open(url, "_blank");
   };
 
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const options = [
-    {
-      place: "Las Vegas",
-      state: "Nevada, United States",
-      imageUrl:
-        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-    },
-    {
-      place: "North Las Vegas",
-      state: "Nevada, United States",
-      imageUrl:
-        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-    },
-    {
-      place: "Santiago de las Vegas",
-      state: "La Habana, Cuba",
-      imageUrl:
-        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-    },
-    {
-      place: "Las Vegas",
-      state: "New Mexico",
-      imageUrl:
-        "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-    },
-  ];
+  // const options = [
+  //   {
+  //     place: "Las Vegas",
+  //     state: "Nevada, United States",
+  //     imageUrl:
+  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
+  //   },
+  //   {
+  //     place: "North Las Vegas",
+  //     state: "Nevada, United States",
+  //     imageUrl:
+  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
+  //   },
+  //   {
+  //     place: "Santiago de las Vegas",
+  //     state: "La Habana, Cuba",
+  //     imageUrl:
+  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
+  //   },
+  //   {
+  //     place: "Las Vegas",
+  //     state: "New Mexico",
+  //     imageUrl:
+  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
+  //   },
+  // ];
 
   return (
     <div className="application_backgroud">
-      <div className="dropDown">
-        {showDropdown && (
-          <div className="search-bar-dropdown">
-            <div className="dropdown">
-              <div className="frame">
-                {options.map((option, index) => (
-                  <dev className="active">
-                    <div className="list-item" key={index}>
-                      <div
-                        className="frame2"
-                        onClick={() => {
-                          setInputValue(`${option.place}`);
-                          setSelectedIndex(index);
-                          setShowDropdown(false);
-                        }}
-                        // onChange={handleDropdownChange}
-                      >
-                        <div className="label">{option.place}</div>
-                        <div className="caption">{option.state}</div>
-                      </div>
-                      <img
-                        className="icon"
-                        src={option.imageUrl}
-                        alt={option.place}
-                      />
-                    </div>
-                  </dev>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
       <div className="search_container">
         <div className="search_body big hide-tablet">
           <div className="search_content big">
@@ -174,7 +217,11 @@ function App() {
                   onClick={() => setShowDropdown(!showDropdown)}
                 />
               </div> */}
-              <SearchBar setLocation={setLocation} />
+              <SearchBar
+                setSelectedCityName={setSelectedCityName}
+                setSelectedCityCords={setSelectedCityCords}
+                onCitySelect={handleCitySelection}
+              />
               {/* <LocationSearchInput /> */}
             </div>
             <div className="search_divider-wrapper hide-tablet">
@@ -315,12 +362,16 @@ function App() {
           <div className="search_text-wrapper">
             <div className="search_headline">Location</div>
             <div className="inputText">
-              <input
+              {/* <input
                 className="inputSize"
                 type="text"
                 value={inputValue}
                 placeholder="Anywhere"
                 onClick={() => setShowDropdown(!showDropdown)}
+              /> */}
+              <SearchBar
+                setSelectedCityName={setSelectedCityName}
+                setSelectedCityCords={setSelectedCityCords}
               />
             </div>
             {/* <LocationSearchInput /> */}
