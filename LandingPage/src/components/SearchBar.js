@@ -78,7 +78,7 @@ function SearchBar({
             <div className="dropdown">
               <div className="frame">
                 {isLoading ? (
-                  <DropSkeleton cards={4} />
+                  <DropSkeleton cards={4}  />
                 ) : // show this while loading
                 results.length > 0 ? (
                   results.map((result, index) => {

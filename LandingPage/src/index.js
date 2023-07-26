@@ -126,9 +126,9 @@ function App() {
         selectedCityCords.swBoxLat
       )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
         selectedCityCords.swBoxLng
-      )}&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23`;
+      )}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     } else if (selectedCity.searchable_type === "SearchPageHotels") {
-      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.cityName
       )}%2C%20${encodeURIComponent(
         selectedCityName.stateName
@@ -148,7 +148,7 @@ function App() {
         selectedCityCords.neBoxLng
       )}`;
     } else if (selectedCity.searchable_type === "States") {
-      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=2023-07-23&stayDates%5BcheckoutDate%5D=2023-07-24&minDate=2023-07-23&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.city_name
       )}%2C%20${encodeURIComponent(
         selectedCityName.state_name
@@ -170,7 +170,61 @@ function App() {
   const handleMobileSearch = () => {
     // const encodedLocation = encodeURIComponent(location);
     // const url = `https://theguestbook.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
-    window.open(url, "_blank");
+    let baseUrl = "";
+    if (selectedCity.searchable_type === "City") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.stateName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLng
+      )}&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
+    } else if (selectedCity.searchable_type === "SearchPageHotels") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.stateName
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
+        selectedCityName.hotelName
+      )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
+        selectedCityName.cityName
+      )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
+        selectedCityName.stateName
+      )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
+        selectedCityName.countryName
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}`;
+    } else if (selectedCity.searchable_type === "States") {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
+        selectedCityName.city_name
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.state_name
+      )}%2C%20${encodeURIComponent(
+        selectedCityName.country_name
+      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.neBoxLng
+      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLat
+      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
+        selectedCityCords.swBoxLng
+      )}`;
+    }
+    window.open(baseUrl, "_blank");
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -203,7 +257,7 @@ function App() {
   // ];
 
   return (
-    // <div className="application_backgroud">
+    <div className="application_backgroud">
       <div className="search_container">
         <div className="search_body big hide-tablet">
           <div className="search_content big">
@@ -374,6 +428,7 @@ function App() {
               <SearchBar
                 setSelectedCityName={setSelectedCityName}
                 setSelectedCityCords={setSelectedCityCords}
+                onCitySelect={handleCitySelection}
               />
             </div>
             {/* <LocationSearchInput /> */}
@@ -463,7 +518,7 @@ function App() {
           </a>
         </div>
       </div>
-    //  </div> 
+    </div>
   );
 }
 
