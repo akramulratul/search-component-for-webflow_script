@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import DropSkeleton from "./DropSkeleton";
+import Skeleton from "react-loading-skeleton";
 
 function SearchBar({
   setSelectedCityName,
@@ -76,74 +78,68 @@ function SearchBar({
             <div className="dropdown">
               <div className="frame">
                 {isLoading ? (
-                  <p>Searching...</p> // show this while loading
-                ) : results.length > 0 ? (
-                  results.map((result, index) => (
-                    <div className="active" key={index}>
-                      <div className="list-item">
-                        <div
-                          className="frame2"
-                          onClick={() => {
-                            let locationName = "";
-                            if (result.hotel_name) {
-                              locationName = result.hotel_name;
-                            } else if (result.city_name) {
-                              locationName = result.city_name;
-                            } else if (result.state_name) {
-                              locationName = result.state_name;
+                  <DropSkeleton cards={4} />
+                ) : // show this while loading
+                results.length > 0 ? (
+                  results.map((result, index) => {
+                    return (
+                      <div className="active" key={index}>
+                        <div className="list-item">
+                          <div
+                            className="frame2"
+                            onClick={() => {
+                              let locationName = "";
+                              if (result.hotel_name) {
+                                locationName = result.hotel_name;
+                              } else if (result.city_name) {
+                                locationName = result.city_name;
+                              } else if (result.state_name) {
+                                locationName = result.state_name;
+                              }
+                              setQuery(result.content);
+                              setShowDropdown(false);
+                              setSelectCity(result);
+                              setSelectedCityName({
+                                cityName: result.city_name,
+                                stateName: result.state_name,
+                                countryName: result.country_name,
+                                hotelName: result.hotel_name,
+                              });
+                            }}
+                          >
+                            <div className="label">
+                              {result.hotel_name
+                                ? result.hotel_name
+                                : result.city_name
+                                ? result.city_name
+                                : result.state_name}
+                            </div>
+                            <div className="caption">
+                              {result.state_name}, {result.city_name},
+                              {result.country_name}
+                            </div>
+                          </div>
+                          <img
+                            className="icon"
+                            src={
+                              result.hotel_name
+                                ? "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg"
+                                : "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
                             }
-                            setQuery(result.content);
-                            setShowDropdown(false);
-                            setSelectCity(result);
-                            setSelectedCityName({
-                              cityName: result.city_name,
-                              stateName: result.state_name,
-                              countryName: result.country_name,
-                              hotelName: result.hotel_name,
-                            });
-                          }}
-                        >
-                          <div className="label">
-                            {result.hotel_name
-                              ? result.hotel_name
-                              : result.city_name
-                              ? result.city_name
-                              : result.state_name}
-                          </div>
-                          <div className="caption">
-                            {result.state_name}, {result.city_name},
-                            {result.country_name}
-                          </div>
+                            alt=""
+                          />
                         </div>
-                        <img
-                          className="icon"
-                          src={
-                            result.hotel_name
-                              ? "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/649785b6203e0fb466bce545_getademo_icon.svg"
-                              : "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
-                          }
-                          alt=""
-                        />
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
-                  <p>Searching...</p>
+                  <DropSkeleton cards={4} />
                 )}
               </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* <ul>
-        {results.map((result, index) => (
-          <li key={index}>
-            {result.hotel_name}
-            {result.city_name}, {result.country_name}
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 }

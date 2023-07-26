@@ -6,6 +6,8 @@ import "./assets/styles/search.css";
 import Modal from "react-modal";
 import SearchBar from "./components/SearchBar";
 import DatePicker from "react-datepicker";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import LocationSearchInput from "./components/LocationSearchInput";
@@ -201,7 +203,7 @@ function App() {
   // ];
 
   return (
-    <div className="application_backgroud">
+    // <div className="application_backgroud">
       <div className="search_container">
         <div className="search_body big hide-tablet">
           <div className="search_content big">
@@ -461,7 +463,7 @@ function App() {
           </a>
         </div>
       </div>
-    </div>
+    //  </div> 
   );
 }
 
