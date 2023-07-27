@@ -78,7 +78,7 @@ function SearchBar({
             <div className="dropdown">
               <div className="frame">
                 {isLoading ? (
-                  <DropSkeleton cards={4}  />
+                  <DropSkeleton cards={4} />
                 ) : // show this while loading
                 results.length > 0 ? (
                   results.map((result, index) => {
@@ -121,12 +121,13 @@ function SearchBar({
                           </div>
                           <img
                             className="icon"
-                            src={
-                              result.hotel_name
-                                ? "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg"
-                                : "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
-                            }
+                            // src={
+                            //   result.hotel_name
+                            //     ? "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg"
+                            //     : "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
+                            // }
                             alt=""
+                            src="https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
                           />
                         </div>
                       </div>
