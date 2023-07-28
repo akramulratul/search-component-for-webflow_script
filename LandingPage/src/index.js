@@ -257,7 +257,7 @@ function App() {
   // ];
 
   return (
-    <div className="application_backgroud">
+    // <div className="application_backgroud">
       <div className="search_container">
         <div className="search_body big hide-tablet">
           <div className="search_content big">
@@ -518,7 +518,7 @@ function App() {
           </a>
         </div>
       </div>
-     </div>  
+    //  </div>  
   );
 }
 
