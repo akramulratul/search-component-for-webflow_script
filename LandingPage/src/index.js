@@ -6,36 +6,28 @@ import "./assets/styles/search.css";
 import Modal from "react-modal";
 import SearchBar from "./components/SearchBar";
 import DatePicker from "react-datepicker";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-import LocationSearchInput from "./components/LocationSearchInput";
+import CustomInput from "./components/CustomInput";
 
 Modal.setAppElement(document.getElementById("react-target"));
 
 function App() {
-  const urlBases = {
-    0: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.3&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.95&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.95&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.4`,
-    1: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=North%20Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=North%20Las%20Vegas&query%5Blocation%5D%5Bstate%5D=Nevada&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=36.33589&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-114.958628&query%5Blocation%5D%5Bbbox%5D%5B2%5D=36.1848302&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-115.2120179`,
-    2: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Santiago%20de%20las%20Vegas%2C%20La%20Habana%2C%20Cuba%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Santiago%20de%20las%20Vegas&query%5Blocation%5D%5Bstate%5D=La%20Habana%2C%20Cuba&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=22.982719&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-82.373835&query%5Blocation%5D%5Bbbox%5D%5B2%5D=22.96151&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-82.401701`,
-    3: `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=Las%20Vegas%2C%20New%20Mexico%2C%20United%20States&query%5Blocation%5D%5Bcity%5D=Las%20Vegas%2C%20New%20Mexico&query%5Blocation%5D%5Bstate%5D=New%20Mexico&query%5Blocation%5D%5Bcountry%5D=United%20States&query%5Blocation%5D%5Bbbox%5D%5B0%5D=35.631469&query%5Blocation%5D%5Bbbox%5D%5B1%5D=-105.18777&query%5Blocation%5D%5Bbbox%5D%5B2%5D=35.557199&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-105.252031`,
-  };
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [location, setLocation] = useState("");
 
   const handleDropdownChange = (e) => {
     setLocation(e.target.value);
   };
-  // const getUrlBase = () => {
-  //   return urlBases[location] || urlBases["Las Vegas"]; // Default to Las Vegas if no location is selected or if the selected location is not in the urlBases map.
-  // };
+
   const [checkInSelected, setCheckInSelected] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
   const [inDate, setInDate] = useState(new Date());
   const [outDate, setOutDate] = useState(
     new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
   );
+  const [isToday, setIsToday] = useState(true);
   const [checkInDate, setCheckInDate] = useState(
     format(new Date(), "yyyy-MM-dd")
   );
@@ -50,14 +42,21 @@ function App() {
     neBoxLng: "",
     swBoxLat: "",
     swBoxLng: "",
+    long: "",
+    lat: "",
+    hLong: "",
+    hLat: "",
   });
   const [selectedCityName, setSelectedCityName] = useState({
     cityName: "",
     stateName: "",
     countryName: "",
     hotelName: "",
+    content: "",
+    searchID: "",
   });
   const [selectedCity, setSelectedCity] = useState(null);
+  const [noResultsFound, setNoResultsFound] = useState(false);
   // Log selectedCity to console
 
   const handleCitySelection = (city) => {
@@ -68,7 +67,9 @@ function App() {
   useEffect(() => {
     console.log(selectedCityName);
   }, [selectedCityName]);
-  useEffect(() => {}, [selectedCityCords]);
+  useEffect(() => {
+    console.log(selectedCityCords);
+  }, [selectedCityCords]);
   useEffect(() => {
     const currentDate = format(new Date(), "yyyy-MM-dd");
     const NextDate = format(
@@ -105,11 +106,6 @@ function App() {
     }
   }, [inDate, outDate]);
   const handleSearch = () => {
-    // const encodedLocation = encodeURIComponent(location);
-    //const url = `https://joingopher.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
-    // const urlBase =
-    //   selectedIndex !== null ? urlBases[selectedIndex] : urlBases["0"];
-    // const url = `${urlBase}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     let baseUrl = "";
     if (selectedCity.searchable_type === "City") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
@@ -118,58 +114,47 @@ function App() {
         selectedCityName.stateName
       )}%2C%20${encodeURIComponent(
         selectedCityName.countryName
-      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLng
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.lat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.long
       )}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     } else if (selectedCity.searchable_type === "SearchPageHotels") {
-      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
-        selectedCityName.cityName
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.stateName
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.countryName
-      )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
-        selectedCityName.hotelName
-      )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
-        selectedCityName.cityName
-      )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
-        selectedCityName.stateName
-      )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
-        selectedCityName.countryName
-      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}`;
+      baseUrl = `https://theguestbook.com/destinations/guestbook/property_details?propertySelected=${selectedCityName.searchID}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
+      // baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
+      //   selectedCityName.content
+      // )}%2C%20${encodeURIComponent(selectedCityName.cityName)}
+      // %2C%20${encodeURIComponent(
+      //   selectedCityName.stateName
+      // )}%2C%20${encodeURIComponent(
+      //   selectedCityName.countryName
+      // )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
+      //   selectedCityName.hotelName
+      // )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
+      //   selectedCityName.cityName
+      // )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
+      //   selectedCityName.stateName
+      // )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
+      //   selectedCityName.countryName
+      // )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+      //   selectedCityCords.hLat
+      // )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+      //   selectedCityCords.hLong
+      // )}`;
+      console.log(baseUrl);
     } else if (selectedCity.searchable_type === "States") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
-        selectedCityName.city_name
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.state_name
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.country_name
-      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLng
-      )}`;
+        selectedCityName.content
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.lat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.long
+      )}&query%5Bproperty%5D%5Btype%5D=States`;
     }
     window.open(baseUrl, "_blank");
   };
 
   const handleMobileSearch = () => {
-    // const encodedLocation = encodeURIComponent(location);
-    // const url = `https://theguestbook.com/destinations/guestbook?page=1&query%5Bproperty%5D%5Btext%5D=Las%20Vegas%2C%20Nevada%2C%20United%20States&query%5Bproperty%5D%5Bcity%5D=${encodedLocation}&query%5Bproperty%5D%5Bstate%5D=Nevada&query%5Bproperty%5D%5Bcountry%5D=United%20States&query%5Bproperty%5D%5Bid%5D=22416&query%5Bproperty%5D%5Btype%5D=City&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=36.17497&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=-115.13722&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     let baseUrl = "";
     if (selectedCity.searchable_type === "City") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
@@ -178,86 +163,58 @@ function App() {
         selectedCityName.stateName
       )}%2C%20${encodeURIComponent(
         selectedCityName.countryName
-      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLng
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.lat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.long
       )}&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     } else if (selectedCity.searchable_type === "SearchPageHotels") {
-      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
-        selectedCityName.cityName
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.stateName
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.countryName
-      )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
-        selectedCityName.hotelName
-      )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
-        selectedCityName.cityName
-      )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
-        selectedCityName.stateName
-      )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
-        selectedCityName.countryName
-      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}`;
+      baseUrl = `https://theguestbook.com/destinations/guestbook/property_details?propertySelected=${selectedCityName.searchID}&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
+      // baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
+      //   selectedCityName.content
+      // )}%2C%20${encodeURIComponent(selectedCityName.cityName)}
+      // %2C%20${encodeURIComponent(
+      //   selectedCityName.stateName
+      // )}%2C%20${encodeURIComponent(
+      //   selectedCityName.countryName
+      // )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
+      //   selectedCityName.hotelName
+      // )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
+      //   selectedCityName.cityName
+      // )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
+      //   selectedCityName.stateName
+      // )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
+      //   selectedCityName.countryName
+      // )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+      //   selectedCityCords.hLat
+      // )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+      //   selectedCityCords.hLong
+      // )}`;
+      console.log(baseUrl);
     } else if (selectedCity.searchable_type === "States") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
-        selectedCityName.city_name
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.state_name
-      )}%2C%20${encodeURIComponent(
-        selectedCityName.country_name
-      )}&query%5Blocation%5D%5Bbbox%5D%5B0%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B1%5D=${encodeURIComponent(
-        selectedCityCords.neBoxLng
-      )}&query%5Blocation%5D%5Bbbox%5D%5B2%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLat
-      )}&query%5Blocation%5D%5Bbbox%5D%5B3%5D=${encodeURIComponent(
-        selectedCityCords.swBoxLng
-      )}`;
+        selectedCityName.content
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
+        selectedCityCords.lat
+      )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
+        selectedCityCords.long
+      )}&query%5Bproperty%5D%5Btype%5D=States`;
     }
     window.open(baseUrl, "_blank");
   };
 
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  // const options = [
-  //   {
-  //     place: "Las Vegas",
-  //     state: "Nevada, United States",
-  //     imageUrl:
-  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-  //   },
-  //   {
-  //     place: "North Las Vegas",
-  //     state: "Nevada, United States",
-  //     imageUrl:
-  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-  //   },
-  //   {
-  //     place: "Santiago de las Vegas",
-  //     state: "La Habana, Cuba",
-  //     imageUrl:
-  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-  //   },
-  //   {
-  //     place: "Las Vegas",
-  //     state: "New Mexico",
-  //     imageUrl:
-  //       "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg",
-  //   },
-  // ];
-
+  var inputStyles = {
+    border: "1px solid #cbcbcb",
+    color: "#525252",
+  };
+  var placeholderStyles = {
+    ...inputStyles,
+    color: "#999999",
+  };
   return (
-    // <div className="application_backgroud">
+    <div className="application_backgroud">
       <div className="search_container">
         <div className="search_body big hide-tablet">
           <div className="search_content big">
@@ -290,6 +247,7 @@ function App() {
                   onChange={(date) => {
                     setInDate(date);
                     setCheckInSelected(true);
+                    setIsToday(false);
                   }}
                   minDate={new Date()}
                   showDisabledMonthNavigation
@@ -297,7 +255,9 @@ function App() {
                   value={
                     checkInSelected ? format(inDate, "yyyy-MM-dd") : "Today"
                   }
-                  className="placeholder-font"
+                  className={`placeholder-font ${
+                    isToday ? "placeholder-font" : "placeholder-selected"
+                  }`}
                 />
               </div>
             </div>
@@ -305,7 +265,7 @@ function App() {
               <div className="search_divider"></div>
             </div>
             <div className="search_text-wrapper hide-tablet">
-              <div className="search_headline">Check-out</div>
+              <div className="search_headline">Check out</div>
               <div>
                 <DatePicker
                   selected={outDate}
@@ -313,13 +273,16 @@ function App() {
                   onChange={(date) => {
                     setOutDate(date);
                     setCheckOutSelected(true);
+                    setIsToday(false);
                   }}
                   value={
                     checkOutSelected
                       ? format(outDate, "yyyy-MM-dd")
-                      : "Next Week"
+                      : "Next week"
                   }
-                  className="placeholder-font"
+                  className={`placeholder-font ${
+                    isToday ? "placeholder-font" : "placeholder-selected"
+                  }`}
                 />
               </div>
             </div>
@@ -331,7 +294,9 @@ function App() {
                 <div className="search_text-wrapper tablet">
                   <div className="search_headline">Check in</div>
                   {showPlaceholder && (
-                    <span className="inputPlaceholder">Today</span>
+                    <span id="inputPlace" className="inputPlaceholder">
+                      Today
+                    </span>
                   )}
                   <input
                     className="inputDate hide-date-icon hidden nativeInputFont"
@@ -346,9 +311,11 @@ function App() {
                   <div className="search_divider"></div>
                 </div>
                 <div className="search_text-wrapper tablet">
-                  <div className="search_headline">Check-out</div>
+                  <div className="search_headline">Check out</div>
                   {showPlaceholder && (
-                    <span className="inputPlaceholder">Next Week</span>
+                    <span id="inputPlace" className="inputPlaceholder">
+                      Next week
+                    </span>
                   )}
                   <input
                     id="dateOut"
@@ -362,12 +329,7 @@ function App() {
               </div>
             </div>
           </div>
-          <a
-            id="w-node-c9348dba-7213-5567-2dac-b63527bbc657-68b550c6"
-            href="#"
-            onClick={handleSearch}
-            className="search_icon w-inline-block"
-          >
+          <a href="#" onClick={handleSearch} className="search_icon">
             <div className="search_icon-wrap">
               <svg
                 className="search_arrow"
@@ -385,11 +347,7 @@ function App() {
             </div>
           </a>
           <div className="search_button-wrapper show-tablet">
-            <a
-              href="#"
-              onClick={handleMobileSearch}
-              className="search_button w-inline-block"
-            >
+            <a href="#" onClick={handleMobileSearch} className="search_button">
               <svg
                 width="24"
                 height="24"
@@ -441,7 +399,9 @@ function App() {
               <div className="search_text-wrapper tablet">
                 <div className="search_headline">Check in</div>
                 {showPlaceholder && (
-                  <span className="inputPlaceholder">Today</span>
+                  <span id="inputPlace" className="inputPlaceholder">
+                    Today
+                  </span>
                 )}
                 <input
                   className="inputDate hide-date-icon hidden nativeInputFont"
@@ -456,9 +416,11 @@ function App() {
                 <div className="search_divider"></div>
               </div>
               <div className="search_text-wrapper tablet">
-                <div className="search_headline">Check-out</div>
+                <div className="search_headline">Check out</div>
                 {showPlaceholder && (
-                  <span className="inputPlaceholder">Next Week</span>
+                  <span id="inputPlace" className="inputPlaceholder">
+                    Next week
+                  </span>
                 )}
                 <input
                   id="dateOut"
@@ -490,11 +452,7 @@ function App() {
           </a>
         </div>
         <div className="search_button-wrapper show-tablet">
-          <a
-            href="#"
-            onClick={handleMobileSearch}
-            className="search_button w-inline-block"
-          >
+          <a href="#" onClick={handleMobileSearch} className="search_button">
             <svg
               width="24"
               height="24"
@@ -518,7 +476,7 @@ function App() {
           </a>
         </div>
       </div>
-    //  </div>  
+    </div>
   );
 }
 

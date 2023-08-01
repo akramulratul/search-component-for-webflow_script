@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import DropSkeleton from "./DropSkeleton";
 import Skeleton from "react-loading-skeleton";
+import useDebounce from "../utilities/useDebounce";
 
 function SearchBar({
   setSelectedCityName,
@@ -15,27 +16,55 @@ function SearchBar({
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectCity, setSelectCity] = useState(null);
+  console.log(selectCity);
+  const [hoverIndex, setHoverIndex] = useState(-1); // new state
+  const [noResultsFound, setNoResultsFound] = useState(false); // new state
+  const debouncedQuery = useDebounce(query, 250);
+  console.log(debouncedQuery);
+  const hotelIcon =
+    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg";
+  const cityIcon =
+    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg";
+  const hotelHoverIcon =
+    "https://uploads-ssl.webflow.com/64c0d745032daeee059a783c/64c0d745032daeee059a7a06_hotelHover.svg";
+  const cityHoverIcon =
+    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b5763404f2fbab0d8ec588_hoverLocation.svg";
+
   useEffect(() => {
     if (selectCity) {
       onCitySelect(selectCity);
     }
   }, [selectCity, onCitySelect]);
+
   useEffect(() => {
-    if (query.length > 0) {
+    let timerId; // declare timerId inside the useEffect
+    if (debouncedQuery.length > 0) {
       setIsLoading(true);
+      setNoResultsFound(false); // Reset the no results flag
       axios
         .get(
-          `https://guest-book-backend.vercel.app/api/v1/search/typeahead?query=${query}`
+          `https://guest-book-backend.vercel.app/api/v1/search/typeahead?query=${debouncedQuery}`
         )
         .then((res) => {
           setResults(res.data); // update results state with fetched data
+          if (res.data.length === 0) {
+            timerId = setTimeout(() => {
+              setNoResultsFound(true);
+            }, 180000); // 180000 milliseconds = 3 minutes
+          }
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          console.error(err);
+          setNoResultsFound(true); // If there's an error, immediately indicate no results.
+        })
         .finally(() => {
           setIsLoading(false); // stop loading after the request is complete (both on success and error)
         });
     }
-  }, [query]); // execute effect whenever the query state changes
+    return () => {
+      clearTimeout(timerId); // Clear the timer when the component unmounts or when the query changes.
+    };
+  }, [debouncedQuery]); // execute effect whenever the query state changes
 
   useEffect(() => {
     if (selectCity) {
@@ -47,22 +76,41 @@ function SearchBar({
             `https://guest-book-backend.vercel.app/api/v1/search/get_coords?&search_type=${formattedType}&query=${selectCity.searchable_id}`
           )
           .then((res) => {
+            console.log("check", res);
             setSelectedCityCords({
               neBoxLat: res.data.ne_box_lat,
               neBoxLng: res.data.ne_box_lng,
               swBoxLat: res.data.sw_box_lat,
               swBoxLng: res.data.sw_box_lng,
+              long: res.data.longitude,
+              lat: res.data.latitude,
+              hLong: res.data.lng,
+              hLat: res.data.lat,
             });
           })
           .catch((err) => console.error(err));
       }
     }
   }, [selectCity]);
+  const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   return (
-    <div>
+    <div className="dropDown_component">
       <input
-        className="inputSize"
+        className="inputSize truncate"
+        id="inputSize"
         type="text"
         value={query}
         onChange={(e) => {
@@ -73,18 +121,24 @@ function SearchBar({
         // onFocus={() => setIsFocused(true)}
       />
       {query.length > 0 && showDropdown && (
-        <div className="dropDown">
+        <div className="dropDown" ref={dropdownRef}>
           <div className="search-bar-dropdown">
             <div className="dropdown">
               <div className="frame">
                 {isLoading ? (
                   <DropSkeleton cards={4} />
+                ) : noResultsFound ? ( // If noResultsFound is true, show 'No results found' message
+                  <p>No results found.</p>
                 ) : // show this while loading
                 results.length > 0 ? (
                   results.map((result, index) => {
                     return (
                       <div className="active" key={index}>
-                        <div className="list-item">
+                        <div
+                          className="list-item"
+                          onMouseEnter={() => setHoverIndex(index)} // set index on hover
+                          onMouseLeave={() => setHoverIndex(-1)} // reset index on mouse leave
+                        >
                           <div
                             className="frame2"
                             onClick={() => {
@@ -104,6 +158,8 @@ function SearchBar({
                                 stateName: result.state_name,
                                 countryName: result.country_name,
                                 hotelName: result.hotel_name,
+                                content: result.content,
+                                searchID: result.searchable_id,
                               });
                             }}
                           >
@@ -115,19 +171,22 @@ function SearchBar({
                                 : result.state_name}
                             </div>
                             <div className="caption">
-                              {result.state_name}, {result.city_name},
-                              {result.country_name}
+                              {result.state_name}, {result.country_name}
                             </div>
                           </div>
                           <img
                             className="icon"
-                            // src={
-                            //   result.hotel_name
-                            //     ? "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg"
-                            //     : "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
-                            // }
+                            src={
+                              hoverIndex === index
+                                ? result.hotel_name
+                                  ? hotelHoverIcon
+                                  : cityHoverIcon
+                                : result.hotel_name
+                                ? hotelIcon
+                                : cityIcon
+                            }
                             alt=""
-                            src="https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
+                            // src="https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
                           />
                         </div>
                       </div>

@@ -4,6 +4,12 @@
   padding: 0px;
   /* font-family: "Inter", sans-serif; */
 }
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .card-skeleton {
   display: flex;
   width: 100%;
@@ -24,7 +30,6 @@ input {
   border: none;
   height: 24px;
   font-size: 16px;
-  width: 100%;
   overflow: hidden;
   cursor: auto;
 }
@@ -72,7 +77,10 @@ input:focus {
 .react-datepicker__month {
   padding: var(--react-datepicker-padding) !important;
   margin: 0px !important;
+  height: 168px !important;
+  overflow: hidden !important;
 }
+
 .react-datepicker-popper[data-placement^="top"]
   .react-datepicker__triangle::before {
   border-top-color: rgba(12, 34, 45, 0.09) !important; /* Border/Main/Default */
@@ -210,7 +218,7 @@ input[type="date"]::placeholder {
 }
 input[type="date"i] {
   background-color: white !important;
-  color: black !important;
+  color: #363d42 !important;
   background: white !important;
 }
 .nativeInputFont {
@@ -220,7 +228,7 @@ input[type="date"i] {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  /* text-align: left; */
+  text-align: left;
   /* align-self: flex-start; */
   /* overflow: hidden; */
 }
@@ -293,10 +301,10 @@ input[type="date"i] {
   color: white;
   cursor: pointer;
 }
-.list-item:hover .icon {
+/* .list-item:hover .icon {
   fill: white;
   content: url("https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b5763404f2fbab0d8ec588_hoverLocation.svg");
-}
+} */
 
 /* .hotel-icon {
   background-image: url("https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg");
@@ -367,9 +375,11 @@ input[type="date"i] {
   margin-top: -343px;
   position: absolute;
   margin-left: -38px;
-  position: absolute;
+  z-index: 2;
 }
-
+.dropDown_component {
+  position: relative;
+}
 /* Body design of the page */
 .search_container {
   text-align: left;
@@ -545,6 +555,7 @@ input[type="date"i] {
 }
 .inputText {
   display: block;
+  width: 100%;
 }
 .inputSize {
   width: 100%;
@@ -576,10 +587,14 @@ input[type="date"i] {
   font-style: normal;
   width: 196px;
 }
+
+.placeholder-selected {
+  color: #363d42; /* Color for selected date */
+}
 .inputPlaceholder {
   background-color: rgb(255, 255, 255);
   position: absolute;
-  top: 417px;
+  top: 107px;
   width: 129px;
   padding: 4px 0px;
   pointer-events: none;
@@ -592,6 +607,7 @@ input[type="date"i] {
   font-style: normal;
   z-index: 1;
 }
+
 .mobilePlceHolder {
   font-family: "Inter", sans-serif;
   color: #6f787f;
@@ -611,9 +627,11 @@ input[type="date"i] {
 
   .search-bar-dropdown {
     max-height: 326px;
+    max-width: 400px;
+    min-width: 377px;
     /* height: 264px; */
-    position: absolute;
-    z-index: 2;
+    /* position: absolute;
+    z-index: 2; */
   }
 
   .frame {
@@ -637,10 +655,10 @@ input[type="date"i] {
     /* transition: background 0.2s ease-out; */
   }
 
-  .list-item:hover::before {
-    background: #0966d7; /* hover background color */
+  /* .list-item:hover::before {
+    background: #0966d7;
     border-radius: 12px;
-  }
+  } */
 
   .list-item:active::before {
     /* animation: activeState 0.5s forwards; */
@@ -687,7 +705,7 @@ input[type="date"i] {
     border-radius: 1rem;
   }
   .search_text-wrapper {
-    width: 100%;
+    max-width: 368px;
     grid-row-gap: 0.25rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -780,9 +798,11 @@ input[type="date"i] {
   }
   .search_body-tablet.homepage {
     height: 152px;
+    /* overflow: hidden; */
   }
   .inputSize {
-    width: 100%;
+    max-width: 368px;
+    min-width: 350px;
     color: var(--content-main-default-text, #363d42);
     /* Text/T400/Desktop/Regular */
     font-family: Inter, sans-serif;
@@ -816,7 +836,6 @@ input[type="date"i] {
     border: none;
     height: 24px;
     font-size: 16px;
-    width: 100%;
     overflow: hidden;
     cursor: auto;
   }
@@ -839,8 +858,9 @@ input[type="date"i] {
     width: 130px;
   }
   .inputSize {
-    width: 100%;
-    color: var(--content-main-default-placeholder, #6f787f);
+    max-width: 310px;
+    min-width: 300px;
+    color: var(--content-main-default-placeholder, #363d42);
     /* Text/T400/Desktop/Regular */
     font-family: Inter;
     font-size: 16px;
@@ -854,13 +874,14 @@ input[type="date"i] {
   .dropDown {
     position: absolute;
     margin-top: 20px;
-    margin-left: 0px;
+    margin-left: -11px;
   }
 
   .search-bar-dropdown {
     max-width: 326px;
-    position: absolute;
-    z-index: 2;
+    min-width: 300px;
+    /* position: absolute;
+    z-index: 2; */
   }
 
   .frame {
@@ -921,13 +942,41 @@ input[type="date"i] {
     height: 150px;
   }
   .inputSize {
-    width: 100%;
-    color: var(--content-main-default-placeholder, #6f787f);
+    max-width: 310px;
+    min-width: 275px;
+    color: var(--content-main-default-placeholder, #363d42);
     /* Text/T400/Desktop/Regular */
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 160% */
+  }
+  #inputSize {
+    max-width: 310px;
+    min-width: 255px !important;
+  }
+  #inputPlace {
+    width: 120px !important;
+  }
+  /* #datein {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  } */
+
+  input[type="date"] {
+    /* -webkit-appearance: none;
+    -moz-appearance: none; */
+    /* appearance: none; */
+  }
+  input::-webkit-date-and-time-value {
+    text-align: left;
+  }
+  .search_text-wrapper {
+    max-width: 310px;
+  }
+  .inputText {
+    width: 97%;
   }
 }
