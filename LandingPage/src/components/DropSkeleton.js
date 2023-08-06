@@ -4,8 +4,8 @@ const DropSkeleton = ({ cards }) => {
   return Array(cards)
     .fill(0)
     .map((_, i) => (
-      <SkeletonTheme baseColor="#0c222d17" highlightColor="#03172630">
-        <div className="list-item" key={i}>
+      <SkeletonTheme baseColor="#0c222d17" highlightColor="#03172630" key={i}>
+        <div className="list-item">
           <div className="card-skeleton">
             <div className="left-col">
               <Skeleton width={104} />

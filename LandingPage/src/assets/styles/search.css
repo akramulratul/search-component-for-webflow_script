@@ -629,6 +629,7 @@ input[type="date"i] {
     max-height: 326px;
     max-width: 400px;
     min-width: 377px;
+    /* width: 40.5vw; */
     /* height: 264px; */
     /* position: absolute;
     z-index: 2; */
@@ -655,20 +656,6 @@ input[type="date"i] {
     /* transition: background 0.2s ease-out; */
   }
 
-  /* .list-item:hover::before {
-    background: #0966d7;
-    border-radius: 12px;
-  } */
-
-  .list-item:active::before {
-    /* animation: activeState 0.5s forwards; */
-    width: 19.62rem;
-    height: 3.75rem;
-    top: 50%;
-    left: 50%;
-    background: #045bbe;
-    transform: translate(-50%, -50%);
-  }
   /* search body on 991 */
   .search_container {
     grid-row-gap: 1rem;
@@ -952,26 +939,19 @@ input[type="date"i] {
     font-weight: 400;
     line-height: 24px; /* 160% */
   }
-  #inputSize {
-    max-width: 310px;
-    min-width: 255px !important;
+  .list-item:active::before {
+    /* animation: activeState 0.5s forwards; */
+    width: 19rem;
+    height: 3.75rem;
+    top: 50%;
+    left: 50%;
+    background: #045bbe;
+    transform: translate(-50%, -50%);
   }
-  #inputPlace {
-    width: 120px !important;
-  }
-  /* #datein {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  } */
-
-  input[type="date"] {
-    /* -webkit-appearance: none;
-    -moz-appearance: none; */
-    /* appearance: none; */
-  }
-  input::-webkit-date-and-time-value {
-    text-align: left;
+  .list-item:active .label,
+  .list-item:active .caption {
+    color: white;
+    cursor: pointer;
   }
   .search_text-wrapper {
     max-width: 310px;

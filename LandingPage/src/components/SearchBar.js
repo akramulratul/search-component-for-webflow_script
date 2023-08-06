@@ -3,6 +3,7 @@ import axios from "axios";
 import DropSkeleton from "./DropSkeleton";
 import Skeleton from "react-loading-skeleton";
 import useDebounce from "../utilities/useDebounce";
+import CityResults from "./CityResults";
 
 function SearchBar({
   setSelectedCityName,
@@ -12,23 +13,11 @@ function SearchBar({
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   // const [inputValue, setInputValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectCity, setSelectCity] = useState(null);
-  console.log(selectCity);
-  const [hoverIndex, setHoverIndex] = useState(-1); // new state
   const [noResultsFound, setNoResultsFound] = useState(false); // new state
   const debouncedQuery = useDebounce(query, 250);
-  console.log(debouncedQuery);
-  const hotelIcon =
-    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64bfab922cc46c71a5af0e74_hotel.svg";
-  const cityIcon =
-    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg";
-  const hotelHoverIcon =
-    "https://uploads-ssl.webflow.com/64c0d745032daeee059a783c/64c0d745032daeee059a7a06_hotelHover.svg";
-  const cityHoverIcon =
-    "https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b5763404f2fbab0d8ec588_hoverLocation.svg";
 
   useEffect(() => {
     if (selectCity) {
@@ -110,7 +99,6 @@ function SearchBar({
     <div className="dropDown_component">
       <input
         className="inputSize truncate"
-        id="inputSize"
         type="text"
         value={query}
         onChange={(e) => {
@@ -133,63 +121,15 @@ function SearchBar({
                 results.length > 0 ? (
                   results.map((result, index) => {
                     return (
-                      <div className="active" key={index}>
-                        <div
-                          className="list-item"
-                          onMouseEnter={() => setHoverIndex(index)} // set index on hover
-                          onMouseLeave={() => setHoverIndex(-1)} // reset index on mouse leave
-                        >
-                          <div
-                            className="frame2"
-                            onClick={() => {
-                              let locationName = "";
-                              if (result.hotel_name) {
-                                locationName = result.hotel_name;
-                              } else if (result.city_name) {
-                                locationName = result.city_name;
-                              } else if (result.state_name) {
-                                locationName = result.state_name;
-                              }
-                              setQuery(result.content);
-                              setShowDropdown(false);
-                              setSelectCity(result);
-                              setSelectedCityName({
-                                cityName: result.city_name,
-                                stateName: result.state_name,
-                                countryName: result.country_name,
-                                hotelName: result.hotel_name,
-                                content: result.content,
-                                searchID: result.searchable_id,
-                              });
-                            }}
-                          >
-                            <div className="label">
-                              {result.hotel_name
-                                ? result.hotel_name
-                                : result.city_name
-                                ? result.city_name
-                                : result.state_name}
-                            </div>
-                            <div className="caption">
-                              {result.state_name}, {result.country_name}
-                            </div>
-                          </div>
-                          <img
-                            className="icon"
-                            src={
-                              hoverIndex === index
-                                ? result.hotel_name
-                                  ? hotelHoverIcon
-                                  : cityHoverIcon
-                                : result.hotel_name
-                                ? hotelIcon
-                                : cityIcon
-                            }
-                            alt=""
-                            // src="https://uploads-ssl.webflow.com/645a6f68de0f1a36cccdbead/64b420a332dbf85fa5a2b6a9_Icon.svg"
-                          />
-                        </div>
-                      </div>
+                      <CityResults
+                        result={result}
+                        index={index}
+                        key={result.searchable_id}
+                        setQuery={setQuery}
+                        setShowDropdown={setShowDropdown}
+                        setSelectCity={setSelectCity}
+                        setSelectedCityName={setSelectedCityName}
+                      />
                     );
                   })
                 ) : (

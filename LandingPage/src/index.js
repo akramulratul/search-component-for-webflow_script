@@ -55,6 +55,7 @@ function App() {
     content: "",
     searchID: "",
   });
+  console.log("Selected city name", selectedCityName);
   const [selectedCity, setSelectedCity] = useState(null);
   const [noResultsFound, setNoResultsFound] = useState(false);
   // Log selectedCity to console
@@ -64,12 +65,8 @@ function App() {
     // Here you can add your URL generation and redirection logic
   };
 
-  useEffect(() => {
-    console.log(selectedCityName);
-  }, [selectedCityName]);
-  useEffect(() => {
-    console.log(selectedCityCords);
-  }, [selectedCityCords]);
+  useEffect(() => {}, [selectedCityName]);
+  useEffect(() => {}, [selectedCityCords]);
   useEffect(() => {
     const currentDate = format(new Date(), "yyyy-MM-dd");
     const NextDate = format(
@@ -205,14 +202,52 @@ function App() {
 
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  var inputStyles = {
-    border: "1px solid #cbcbcb",
-    color: "#525252",
-  };
-  var placeholderStyles = {
-    ...inputStyles,
-    color: "#999999",
-  };
+
+  // useEffect(() => {
+  //   if ("ontouchstart" in window) {
+  //     var stylesheet = document.styleSheets[0]; // Or select the appropriate stylesheet
+  //     for (var i = 0; i < stylesheet.cssRules.length; i++) {
+  //       var rule = stylesheet.cssRules[i];
+  //       if (rule.selectorText && rule.selectorText.includes(":hover")) {
+  //         stylesheet.deleteRule(i);
+  //         i--; // Decrement to account for the removed rule
+  //       }
+  //     }
+  //   }
+  // }, []);
+  function isTouchDevice() {
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  }
+
+  useEffect(() => {
+    if (isTouchDevice()) {
+      Array.from(document.styleSheets).forEach((stylesheet) => {
+        try {
+          if (
+            stylesheet.href === null ||
+            stylesheet.href.startsWith(window.location.origin)
+          ) {
+            for (let i = stylesheet.cssRules.length - 1; i >= 0; i--) {
+              let cssRule = stylesheet.cssRules[i];
+              if (
+                cssRule.selectorText &&
+                cssRule.selectorText.includes(":hover")
+              ) {
+                stylesheet.deleteRule(i);
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Unable to modify stylesheet:", error);
+        }
+      });
+    }
+  }, []);
+
   return (
     <div className="application_backgroud">
       <div className="search_container">
@@ -299,8 +334,8 @@ function App() {
                     </span>
                   )}
                   <input
-                    className="inputDate hide-date-icon hidden nativeInputFont"
-                    id="datein"
+                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
+                    id="datein "
                     type="date"
                     min={format(new Date(), "yyyy-MM-dd")}
                     value={checkInDate}
@@ -320,7 +355,7 @@ function App() {
                   <input
                     id="dateOut"
                     type="date"
-                    className="inputDate hide-date-icon hidden nativeInputFont"
+                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                     value={checkOutDate}
                     min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                     onChange={(e) => setCheckOutDate(e.target.value)}
@@ -404,7 +439,7 @@ function App() {
                   </span>
                 )}
                 <input
-                  className="inputDate hide-date-icon hidden nativeInputFont"
+                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                   id="datein"
                   type="date"
                   min={format(new Date(), "yyyy-MM-dd")}
@@ -425,7 +460,7 @@ function App() {
                 <input
                   id="dateOut"
                   type="date"
-                  className="inputDate hide-date-icon hidden nativeInputFont"
+                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                   value={checkOutDate}
                   min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                   onChange={(e) => setCheckOutDate(e.target.value)}
