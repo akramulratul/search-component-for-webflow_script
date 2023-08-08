@@ -14,6 +14,7 @@ function SearchBar({
   const [results, setResults] = useState([]);
   // const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectCity, setSelectCity] = useState(null);
   const [noResultsFound, setNoResultsFound] = useState(false); // new state
@@ -95,6 +96,17 @@ function SearchBar({
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+  useEffect(() => {
+    const handleDocumentClick = () => {
+      setDropdownVisible(false);
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleDocumentClick);
+    };
+  }, []);
   return (
     <div className="dropDown_component">
       <input
@@ -106,10 +118,15 @@ function SearchBar({
           setShowDropdown(true);
         }}
         placeholder="Anywhere"
+        onFocus={() => setDropdownVisible(true)}
         // onFocus={() => setIsFocused(true)}
       />
       {query.length > 0 && showDropdown && (
-        <div className="dropDown" ref={dropdownRef}>
+        <div
+          className="dropDown"
+          ref={dropdownRef}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <div className="search-bar-dropdown">
             <div className="dropdown">
               <div className="frame">

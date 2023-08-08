@@ -46,6 +46,9 @@ input:focus {
   width: 100vw;
 }
 /* react patepicker  */
+.react-datepicker__month-container {
+  height: 300px;
+}
 .react-datepicker-wrapper {
   width: 0% !important;
 }
@@ -77,8 +80,10 @@ input:focus {
 .react-datepicker__month {
   padding: var(--react-datepicker-padding) !important;
   margin: 0px !important;
-  height: 168px !important;
-  overflow: hidden !important;
+  height: 192px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .react-datepicker-popper[data-placement^="top"]

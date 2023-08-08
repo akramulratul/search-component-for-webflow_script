@@ -334,7 +334,7 @@ function App() {
                     </span>
                   )}
                   <input
-                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
+                    className="inputDate hide-date-icon  nativeInputFont"
                     id="datein "
                     type="date"
                     min={format(new Date(), "yyyy-MM-dd")}
@@ -355,7 +355,7 @@ function App() {
                   <input
                     id="dateOut"
                     type="date"
-                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
+                    className="inputDate hide-date-icon  nativeInputFont"
                     value={checkOutDate}
                     min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                     onChange={(e) => setCheckOutDate(e.target.value)}
@@ -439,7 +439,7 @@ function App() {
                   </span>
                 )}
                 <input
-                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
+                  className="inputDate hide-date-icon  nativeInputFont"
                   id="datein"
                   type="date"
                   min={format(new Date(), "yyyy-MM-dd")}
@@ -460,7 +460,7 @@ function App() {
                 <input
                   id="dateOut"
                   type="date"
-                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
+                  className="inputDate hide-date-icon  nativeInputFont"
                   value={checkOutDate}
                   min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                   onChange={(e) => setCheckOutDate(e.target.value)}
