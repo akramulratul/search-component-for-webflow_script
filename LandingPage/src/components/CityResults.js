@@ -94,6 +94,7 @@ const CityResults = ({
         return `${result.country_name}`;
       }
     }
+    
   };
 
   return (

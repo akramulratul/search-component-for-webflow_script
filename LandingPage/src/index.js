@@ -104,7 +104,7 @@ function App() {
   }, [inDate, outDate]);
   const handleSearch = () => {
     let baseUrl = "";
-    if (selectedCity.searchable_type === "City") {
+    if (selectedCity && selectedCity.searchable_type === "City") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.cityName
       )}%2C%20${encodeURIComponent(
@@ -116,30 +116,12 @@ function App() {
       )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
         selectedCityCords.long
       )}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
-    } else if (selectedCity.searchable_type === "SearchPageHotels") {
+    } else if (
+      selectedCity &&
+      selectedCity.searchable_type === "SearchPageHotels"
+    ) {
       baseUrl = `https://theguestbook.com/destinations/guestbook/property_details?propertySelected=${selectedCityName.searchID}&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
-      // baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
-      //   selectedCityName.content
-      // )}%2C%20${encodeURIComponent(selectedCityName.cityName)}
-      // %2C%20${encodeURIComponent(
-      //   selectedCityName.stateName
-      // )}%2C%20${encodeURIComponent(
-      //   selectedCityName.countryName
-      // )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
-      //   selectedCityName.hotelName
-      // )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
-      //   selectedCityName.cityName
-      // )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
-      //   selectedCityName.stateName
-      // )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
-      //   selectedCityName.countryName
-      // )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
-      //   selectedCityCords.hLat
-      // )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
-      //   selectedCityCords.hLong
-      // )}`;
-      console.log(baseUrl);
-    } else if (selectedCity.searchable_type === "States") {
+    } else if (selectedCity && selectedCity.searchable_type === "States") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.content
       )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
@@ -147,13 +129,15 @@ function App() {
       )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
         selectedCityCords.long
       )}&query%5Bproperty%5D%5Btype%5D=States`;
+    } else {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Bbbox%5D%5B0%5D=76.16051035392279&query%5Blocation%5D%5Bbbox%5D%5B1%5D=180&query%5Blocation%5D%5Bbbox%5D%5B2%5D=-62.20793691690639&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-180&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}`;
     }
     window.open(baseUrl, "_blank");
   };
 
   const handleMobileSearch = () => {
     let baseUrl = "";
-    if (selectedCity.searchable_type === "City") {
+    if (selectedCity && selectedCity.searchable_type === "City") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.cityName
       )}%2C%20${encodeURIComponent(
@@ -165,30 +149,12 @@ function App() {
       )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
         selectedCityCords.long
       )}&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
-    } else if (selectedCity.searchable_type === "SearchPageHotels") {
+    } else if (
+      selectedCity &&
+      selectedCity.searchable_type === "SearchPageHotels"
+    ) {
       baseUrl = `https://theguestbook.com/destinations/guestbook/property_details?propertySelected=${selectedCityName.searchID}&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
-      // baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${inDate}&stayDates%5BcheckoutDate%5D=${outDate}&query%5Bproperty%5D%5Btext%5D=${encodeURIComponent(
-      //   selectedCityName.content
-      // )}%2C%20${encodeURIComponent(selectedCityName.cityName)}
-      // %2C%20${encodeURIComponent(
-      //   selectedCityName.stateName
-      // )}%2C%20${encodeURIComponent(
-      //   selectedCityName.countryName
-      // )}&query%5Bproperty%5D%5Bhotel%5D=${encodeURIComponent(
-      //   selectedCityName.hotelName
-      // )}&query%5Bproperty%5D%5Bcity%5D=${encodeURIComponent(
-      //   selectedCityName.cityName
-      // )}&query%5Bproperty%5D%5Bstate%5D=${encodeURIComponent(
-      //   selectedCityName.stateName
-      // )}&query%5Bproperty%5D%5Bcountry%5D=${encodeURIComponent(
-      //   selectedCityName.countryName
-      // )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
-      //   selectedCityCords.hLat
-      // )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
-      //   selectedCityCords.hLong
-      // )}`;
-      console.log(baseUrl);
-    } else if (selectedCity.searchable_type === "States") {
+    } else if (selectedCity && selectedCity.searchable_type === "States") {
       baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}&query%5Blocation%5D%5Btext%5D=${encodeURIComponent(
         selectedCityName.content
       )}&query%5Bproperty%5D%5Bcenter%5D%5B0%5D=${encodeURIComponent(
@@ -196,6 +162,8 @@ function App() {
       )}&query%5Bproperty%5D%5Bcenter%5D%5B1%5D=${encodeURIComponent(
         selectedCityCords.long
       )}&query%5Bproperty%5D%5Btype%5D=States`;
+    } else {
+      baseUrl = `https://theguestbook.com/destinations/guestbook?page=1&query%5Blocation%5D%5Bbbox%5D%5B0%5D=76.16051035392279&query%5Blocation%5D%5Bbbox%5D%5B1%5D=180&query%5Blocation%5D%5Bbbox%5D%5B2%5D=-62.20793691690639&query%5Blocation%5D%5Bbbox%5D%5B3%5D=-180&stayDates%5BcheckinDate%5D=${checkInDate}&stayDates%5BcheckoutDate%5D=${checkOutDate}`;
     }
     window.open(baseUrl, "_blank");
   };
@@ -334,7 +302,7 @@ function App() {
                     </span>
                   )}
                   <input
-                    className="inputDate hide-date-icon  nativeInputFont"
+                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                     id="datein "
                     type="date"
                     min={format(new Date(), "yyyy-MM-dd")}
@@ -355,7 +323,7 @@ function App() {
                   <input
                     id="dateOut"
                     type="date"
-                    className="inputDate hide-date-icon  nativeInputFont"
+                    className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                     value={checkOutDate}
                     min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                     onChange={(e) => setCheckOutDate(e.target.value)}
@@ -439,7 +407,7 @@ function App() {
                   </span>
                 )}
                 <input
-                  className="inputDate hide-date-icon  nativeInputFont"
+                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                   id="datein"
                   type="date"
                   min={format(new Date(), "yyyy-MM-dd")}
@@ -460,7 +428,7 @@ function App() {
                 <input
                   id="dateOut"
                   type="date"
-                  className="inputDate hide-date-icon  nativeInputFont"
+                  className="inputDate hide-date-icon inputDatePadding nativeInputFont"
                   value={checkOutDate}
                   min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                   onChange={(e) => setCheckOutDate(e.target.value)}
