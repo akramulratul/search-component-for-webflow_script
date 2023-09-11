@@ -66,7 +66,6 @@ function SearchBar({
             `https://guest-book-backend.vercel.app/api/v1/search/get_coords?&search_type=${formattedType}&query=${selectCity.searchable_id}`
           )
           .then((res) => {
-            console.log("check", res);
             setSelectedCityCords({
               neBoxLat: res.data.ne_box_lat,
               neBoxLng: res.data.ne_box_lng,
