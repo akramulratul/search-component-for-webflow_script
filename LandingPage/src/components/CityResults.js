@@ -7,8 +7,8 @@ const CityResults = ({
   setSelectCity,
   setSelectedCityName,
   index,
+  inputRef,
 }) => {
-  console.log("New Component", result.searchable_type);
   const [hoverIndex, setHoverIndex] = useState(-1); // new state
   const [activeIndex, setActiveIndex] = useState(-1);
   const hotelIcon =
@@ -40,6 +40,9 @@ const CityResults = ({
       content: result.content,
       searchID: result.searchable_id,
     });
+    setTimeout(() => {
+      inputRef.current.focus(); // Add this line to focus the input field
+    }, 0);
   };
 
   const label = result.hotel_name
@@ -94,7 +97,6 @@ const CityResults = ({
         return `${result.country_name}`;
       }
     }
-    
   };
 
   return (

@@ -4,22 +4,23 @@ import DropSkeleton from "./DropSkeleton";
 import Skeleton from "react-loading-skeleton";
 import useDebounce from "../utilities/useDebounce";
 import CityResults from "./CityResults";
-
+import PropTypes from "prop-types";
 function SearchBar({
   setSelectedCityName,
   setSelectedCityCords,
   onCitySelect,
+  setIsFocused,
 }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  // const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectCity, setSelectCity] = useState(null);
   const [noResultsFound, setNoResultsFound] = useState(false); // new state
   const debouncedQuery = useDebounce(query, 250);
-
+  const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
   useEffect(() => {
     if (selectCity) {
       onCitySelect(selectCity);
@@ -81,7 +82,6 @@ function SearchBar({
       }
     }
   }, [selectCity]);
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     function handleOutsideClick(event) {
@@ -106,25 +106,41 @@ function SearchBar({
       document.removeEventListener("mousedown", handleDocumentClick);
     };
   }, []);
+
   return (
     <div className="dropDown_component">
       <input
         className="inputSize truncate"
         type="text"
         value={query}
+        ref={inputRef}
         onChange={(e) => {
           setQuery(e.target.value);
           setShowDropdown(true);
         }}
         placeholder="Anywhere"
-        onFocus={() => setDropdownVisible(true)}
-        // onFocus={() => setIsFocused(true)}
+        onFocus={() => {
+          setDropdownVisible(true);
+          setIsFocused(true); // Set isFocused to true on focus
+        }}
+        onBlur={(e) => {
+          if (
+            dropdownRef.current &&
+            dropdownRef.current.contains(e.relatedTarget)
+          ) {
+            return;
+          }
+          setIsFocused(false);
+        }}
       />
       {query.length > 0 && showDropdown && (
         <div
           className="dropDown"
           ref={dropdownRef}
-          onMouseDown={(e) => e.stopPropagation()}
+          onMouseDown={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
         >
           <div className="search-bar-dropdown">
             <div className="dropdown">
@@ -145,6 +161,7 @@ function SearchBar({
                         setShowDropdown={setShowDropdown}
                         setSelectCity={setSelectCity}
                         setSelectedCityName={setSelectedCityName}
+                        inputRef={inputRef}
                       />
                     );
                   })
@@ -159,5 +176,9 @@ function SearchBar({
     </div>
   );
 }
+
+SearchBar.defaultProps = {
+  setIsFocused: () => {}, // A no-op function as a fallback
+};
 
 export default SearchBar;

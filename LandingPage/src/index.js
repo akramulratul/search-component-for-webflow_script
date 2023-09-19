@@ -14,7 +14,6 @@ import CustomInput from "./components/CustomInput";
 Modal.setAppElement(document.getElementById("react-target"));
 
 function App() {
-  const [selectedIndex, setSelectedIndex] = useState(null);
   const [location, setLocation] = useState("");
 
   const handleDropdownChange = (e) => {
@@ -23,6 +22,7 @@ function App() {
 
   const [checkInSelected, setCheckInSelected] = useState(false);
   const [checkOutSelected, setCheckOutSelected] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const [inDate, setInDate] = useState(new Date());
   const [outDate, setOutDate] = useState(
     new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000)
@@ -56,7 +56,6 @@ function App() {
     searchID: "",
   });
   const [selectedCity, setSelectedCity] = useState(null);
-  const [noResultsFound, setNoResultsFound] = useState(false);
   // Log selectedCity to console
 
   const handleCitySelection = (city) => {
@@ -178,22 +177,6 @@ function App() {
     }
     window.open(baseUrl, "_blank");
   };
-
-  const [inputValue, setInputValue] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  // useEffect(() => {
-  //   if ("ontouchstart" in window) {
-  //     var stylesheet = document.styleSheets[0]; // Or select the appropriate stylesheet
-  //     for (var i = 0; i < stylesheet.cssRules.length; i++) {
-  //       var rule = stylesheet.cssRules[i];
-  //       if (rule.selectorText && rule.selectorText.includes(":hover")) {
-  //         stylesheet.deleteRule(i);
-  //         i--; // Decrement to account for the removed rule
-  //       }
-  //     }
-  //   }
-  // }, []);
   function isTouchDevice() {
     return (
       "ontouchstart" in window ||
@@ -228,28 +211,17 @@ function App() {
   }, []);
 
   return (
-    <div className="application_backgroud">
-      <div className="search_container">
+    // <div className="application_backgroud">
+      <div className={`search_container ${isFocused ? "focused" : ""}`}>
         <div className="search_body big hide-tablet">
           <div className="search_content big">
             <div className="search_text-wrapper">
               <div className="search_headline">Location</div>
-              {/* <div>Anywhere</div> */}
-              {/* <div className="inputText">
-                <input
-                  className="inputSize"
-                  type="text"
-                  value={inputValue}
-                  placeholder="Anywhere"
-                  onClick={() => setShowDropdown(!showDropdown)}
-                />
-              </div> */}
               <SearchBar
                 setSelectedCityName={setSelectedCityName}
                 setSelectedCityCords={setSelectedCityCords}
                 onCitySelect={handleCitySelection}
               />
-              {/* <LocationSearchInput /> */}
             </div>
             <div className="search_divider-wrapper hide-tablet">
               <div className="search_divider"></div>
@@ -390,17 +362,11 @@ function App() {
           <div className="search_text-wrapper">
             <div className="search_headline">Location</div>
             <div className="inputText">
-              {/* <input
-                className="inputSize"
-                type="text"
-                value={inputValue}
-                placeholder="Anywhere"
-                onClick={() => setShowDropdown(!showDropdown)}
-              /> */}
               <SearchBar
                 setSelectedCityName={setSelectedCityName}
                 setSelectedCityCords={setSelectedCityCords}
                 onCitySelect={handleCitySelection}
+                setIsFocused={setIsFocused}
               />
             </div>
             {/* <LocationSearchInput /> */}
@@ -490,7 +456,7 @@ function App() {
           </a>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
 
