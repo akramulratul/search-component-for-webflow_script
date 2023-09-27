@@ -48,9 +48,9 @@ input:focus {
   width: 100vw;
 }
 .react-datepicker__day--outside-month {
-  color: transparent !important;
+  color: #ccc !important;
   pointer-events: none !important;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 /* react patepicker  */
 .react-datepicker__month-container {
