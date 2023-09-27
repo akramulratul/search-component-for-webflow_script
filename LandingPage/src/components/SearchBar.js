@@ -118,7 +118,7 @@ function SearchBar({
           setQuery(e.target.value);
           setShowDropdown(true);
         }}
-        placeholder="Anywhere"
+        placeholder="Las Vegas"
         onFocus={() => {
           setDropdownVisible(true);
           setIsFocused(true); // Set isFocused to true on focus
