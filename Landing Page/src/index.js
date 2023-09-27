@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { format } from "date-fns";
@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import CustomInput from "./components/CustomInput";
 
 Modal.setAppElement(document.getElementById("react-target"));
-
+// const SearchBar = lazy(() => import("./components/SearchBar"));
 function App() {
   const [location, setLocation] = useState("");
 
@@ -90,8 +90,8 @@ function App() {
   }, [checkInDate, checkOutDate]);
 
   useEffect(() => {
-    console.log("In Date", inDate.toDateString());
-    console.log("Out Date", outDate.toDateString());
+    // console.log("In Date", inDate.toDateString());
+    // console.log("Out Date", outDate.toDateString());
     if (inDate.toDateString() === outDate.toDateString()) {
       const newOutDate = new Date(inDate);
       newOutDate.setDate(newOutDate.getDate() + 1);
@@ -219,6 +219,7 @@ function App() {
         <div className="search_content big">
           <div className="search_text-wrapper">
             <div className="search_headline">Location</div>
+
             <SearchBar
               setSelectedCityName={setSelectedCityName}
               setSelectedCityCords={setSelectedCityCords}
@@ -262,7 +263,7 @@ function App() {
                   setIsToday(false);
                 }}
                 value={
-                  checkOutSelected ? format(outDate, "yyyy-MM-dd") : "Tomorrow"
+                  checkInSelected ? format(outDate, "yyyy-MM-dd") : "Tomorrow"
                 }
                 className={`placeholder-font ${
                   isToday ? "placeholder-font" : "placeholder-selected"
@@ -283,7 +284,7 @@ function App() {
                   </span>
                 )}
                 <input
-                  className="inputDate hide-date-icon hide-date-icon nativeInputFont nativeInputFont"
+                  className="inputDate hide-date-icon nativeInputFont"
                   id="datein "
                   type="date"
                   min={format(new Date(), "yyyy-MM-dd")}
@@ -304,7 +305,7 @@ function App() {
                 <input
                   id="dateOut"
                   type="date"
-                  className="inputDate hide-date-icon hide-date-icon nativeInputFont nativeInputFont"
+                  className="inputDate hide-date-icon nativeInputFont"
                   value={checkOutDate}
                   min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                   onChange={(e) => setCheckOutDate(e.target.value)}
@@ -382,7 +383,7 @@ function App() {
                 </span>
               )}
               <input
-                className="inputDate hide-date-icon hide-date-icon nativeInputFont nativeInputFont"
+                className="inputDate hide-date-icon nativeInputFont"
                 id="datein"
                 type="date"
                 min={format(new Date(), "yyyy-MM-dd")}
@@ -403,7 +404,7 @@ function App() {
               <input
                 id="dateOut"
                 type="date"
-                className="inputDate hide-date-icon hide-date-icon nativeInputFont nativeInputFont"
+                className="inputDate hide-date-icon nativeInputFont"
                 value={checkOutDate}
                 min={checkInDate || format(new Date(), "yyyy-MM-dd")}
                 onChange={(e) => setCheckOutDate(e.target.value)}
