@@ -240,7 +240,11 @@ function App() {
                 minDate={new Date()}
                 showDisabledMonthNavigation
                 selected={inDate}
-                value={checkInSelected ? format(inDate, "yyyy-MM-dd") : "Today"}
+                value={
+                  checkInSelected || checkOutSelected
+                    ? format(inDate, "yyyy-MM-dd")
+                    : "Today"
+                }
                 className={`placeholder-font ${
                   isToday ? "placeholder-font" : "placeholder-selected"
                 }`}
@@ -262,7 +266,9 @@ function App() {
                   setIsToday(false);
                 }}
                 value={
-                  checkInSelected ? format(outDate, "yyyy-MM-dd") : "Tomorrow"
+                  checkInSelected || checkOutSelected
+                    ? format(outDate, "yyyy-MM-dd")
+                    : "Tomorrow"
                 }
                 className={`placeholder-font ${
                   isToday ? "placeholder-font" : "placeholder-selected"
